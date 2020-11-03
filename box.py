@@ -9,7 +9,9 @@ class Box:
     # Initializer (x,y for top left corner)
     def __init__(self, x, y):
         # TODO: Gisele
+        return
 
     # Check if given coordinates form a line of the current box
     def connect(self, coordinates):
         # TODO: Gisele
+        return
