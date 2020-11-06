@@ -1,15 +1,20 @@
-# Attributes
-#   score
-#   dimensions
-#   available moves
-#   comleted moves
-#   list of possible boxes
+import box
 
 class Board:
-    # Initializer (takes number of rows and columns)
+    # Attributes
+    #   score
+    #   dimensions
+    #   available moves
+    #   completed moves
+    #   list of possible boxes
+    
+    # Initializer (takesnumber of rows and columns)
     def __init__(self, rows, cols):
-        # TODO: Jared
-        return
+        self.score = [0,0] #p1 then p2
+        self.dimensions = [rows, cols]
+        self.available_moves = self.generateMoves()
+        self.completed_moves = []
+        self.possible_boxes = self.generateBoxes()
 
     # Create a queue of all available moves/lines that can be played on this board, given a particular number of rows and columns
     def generateMoves(self, r, c):
@@ -19,13 +24,22 @@ class Board:
 
     # Creates a list of Box objects (from box.py)
     def generateBoxes(self, rows, cols):
-        # TODO: Jared
-        return
+        box_list = []
+        for i in range(0,rows):
+            for j in range(0,cols):
+                box = Box(i, j)
+                box_list.append(box)
+        return box_list
 
     # Prints a text representation of the current board state for the command line
-    def displayBoard(self):
-        # TODO: Jared
+    '''def displayBoard(self):
+        for i in self.generateMoves():
+            if i in self.completed_moves:
+                if i[0][0] == i[1][0]
+        print(
         return
+    i'll finish this up tomorrow - Jared
+    '''
 
     # Check self.available_moves for the coordinates given in the parameters
     # If the coordinates are in self.available_moves then:
