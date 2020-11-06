@@ -25,11 +25,16 @@ class Box:
         self.coordinates = [(x,y), (x+1,y), (x,y+1), (x+1,y+1)]
 
         # Coordinates (as tuple) for each box's line
-        self.topline    = (self.coordinates[0], self.coordinates[2])
-        self.leftline   = (self.coordinates[0], self.coordinates[1])
-        self.bottomline = (self.coordinates[1], self.coordinates[3])
-        self.rightline  = (self.coordinates[2], self.coordinates[3])
-
+        #self.topline    = (self.coordinates[0], self.coordinates[2])
+        #self.leftline   = (self.coordinates[0], self.coordinates[1])
+        #self.bottomline = (self.coordinates[1], self.coordinates[3])
+        #self.rightline  = (self.coordinates[2], self.coordinates[3])
+        
+        self.topline    = (self.coordinates[0], self.coordinates[1])
+        self.leftline   = (self.coordinates[0], self.coordinates[2])
+        self.bottomline = (self.coordinates[2], self.coordinates[3])
+        self.rightline  = (self.coordinates[1], self.coordinates[3])
+        
         # Array with all four lines' coordinates
         self.lines = [self.topline, self.leftline, self.rightline, self.bottomline]
 
