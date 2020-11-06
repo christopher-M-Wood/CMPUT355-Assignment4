@@ -19,6 +19,7 @@ class Board:
     # Create a queue of all available moves/lines that can be played on this board, given a particular number of rows and columns
     def generateMoves(self, r, c):
         # Should store each line on the board as a set (tuple) of coordinates in a queue
+        # NOTE from Jared: I coded the text representation to use ((x,y),(x,y)), so a tuple of tuples
         # TODO: Ian
         return
 
@@ -32,14 +33,59 @@ class Board:
         return box_list
 
     # Prints a text representation of the current board state for the command line
-    '''def displayBoard(self):
-        for i in self.generateMoves():
-            if i in self.completed_moves:
-                if i[0][0] == i[1][0]
-        print(
-        return
-    i'll finish this up tomorrow - Jared
-    '''
+    def displayBoard(self):
+        for i in range(0,self.dimensions[0]-1):
+            horiz_row = ""
+            for j in range(0,self.dimensions[1]):
+                cell_width = "."
+                if ((j,i),(j+1,i)) in self.completed_moves:
+                    cell_width += "_____"
+                else:
+                    cell_width += "     "
+                horiz_row += cell_width
+            print(horiz_row)
+            vert_row = ""
+            for j in range(0,self.dimensions[1]):
+                cell_width = ""
+                if ((j,i),(j,i+1)) in self.completed_moves:
+                    cell_width += "|"
+                else:
+                    cell_width += " "
+                cell_width += "     "
+                vert_row += cell_width
+            print(vert_row)
+            box_marker_row = ""
+            for j in range(0,self.dimensions[1]):
+                cell_width = ""
+                if ((j,i),(j,i+1)) in self.completed_moves:
+                    cell_width += "|"
+                else:
+                    cell_width += " "
+                cell_width += "  "
+                if j != self.dimensions[1]-1:
+                    box_found = False
+                    for box in self.possible_boxes:
+                        if box.top_left[0] == j and box.top_left[1] == i and box.complete:
+                            cell_width += str(box.filled_by)
+                            box_found = True
+                    if box_found == False:
+                        cell_width += " "
+                else:
+                    cell_width += " "
+                cell_width += "  "
+                box_marker_row += cell_width
+            print(box_marker_row)
+            print(vert_row)
+        horiz_row = ""
+        for j in range(0,self.dimensions[1]):
+            cell_width = "."
+            if ((self.dimensions[0],j),(self.dimensions[0]+1,j)) in self.completed_moves:
+                cell_width += "_____"
+            else:
+                cell_width += "     "
+            horiz_row += cell_width
+        print(horiz_row)
+
 
     # Check self.available_moves for the coordinates given in the parameters
     # If the coordinates are in self.available_moves then:
