@@ -97,7 +97,7 @@ class Board:
     # If the coordinates are in self.available_moves then:
     #   - Remove the coordinates from self.available_moves
     #   - Add the coordinates to self.completed_moves
-    #   - Check our list of boxes to determine if we have an completed boxes with this new line
+    #   - Check our list of boxes (call checkBoxes()) to determine if we have an completed boxes with this new line
     def connectDots(self, coordinates, player):
         # TODO: Ian
         return 
