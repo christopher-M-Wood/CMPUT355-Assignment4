@@ -114,7 +114,7 @@ class Board:
         player1 = self.board.score[0]
         player2 = self.board.score[1]
                 
-        # Check if tuple coordinates in box list
+        # Check if the line is in any box's list
         if coordinates in self.possible_boxes:
             
             #Do something
