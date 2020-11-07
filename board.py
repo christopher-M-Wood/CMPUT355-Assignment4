@@ -106,8 +106,6 @@ class Board:
     # Change self.owner in Box object (from box.py) to player's identity
     def checkBoxes(self, coordinates, player):
         # TODO: Victor
-   
         
-        
-        
+    
         return 
