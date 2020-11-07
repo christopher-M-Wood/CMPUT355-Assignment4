@@ -10,25 +10,30 @@ class Board:
     
     # Initializer (takesnumber of rows and columns)
     def __init__(self, rows, cols):
-        self.score = [0,0] #p1 then p2
-        self.dimensions = [rows, cols]
-        self.available_moves = self.generateMoves()
+        self.row = int(rows)
+        self.col = int(cols)
+        
+        self.score = [0,0] # Format: [p1,p2]
+        self.dimensions = [self.row, self.col]
+        
+        # TO DO self.available_moves = self.generateMoves()
+        
         self.completed_moves = []
-        self.possible_boxes = self.generateBoxes()
+        self.possible_boxes = self.generateBoxes(self.row,self.col)
 
     # Create a queue of all available moves/lines that can be played on this board, given a particular number of rows and columns
     def generateMoves(self, r, c):
         # Should store each line on the board as a set (tuple) of coordinates in a queue
         # NOTE from Jared: I coded the text representation to use ((x,y),(x,y)), so a tuple of tuples
         # TODO: Ian
-        return
+        return 
 
     # Creates a list of Box objects (from box.py)
     def generateBoxes(self, rows, cols):
         box_list = []
         for i in range(0,rows):
             for j in range(0,cols):
-                box = Box(i, j)
+                self.box = box.Box(i, j)
                 box_list.append(box)
         return box_list
 
@@ -65,7 +70,7 @@ class Board:
                 if j != self.dimensions[1]-1:
                     box_found = False
                     for box in self.possible_boxes:
-                        if box.top_left[0] == j and box.top_left[1] == i and box.complete:
+                        if self.box.top_left[0] == j and self.box.top_left[1] == i and box.complete:
                             cell_width += str(box.filled_by)
                             box_found = True
                     if box_found == False:
@@ -94,11 +99,15 @@ class Board:
     #   - Check our list of boxes to determine if we have an completed boxes with this new line
     def connectDots(self, coordinates, player):
         # TODO: Ian
-        return
+        return 
 
     # Checks the list of boxes to see if the coordinates for the newly-added line completes a box
     # Increment score for player who completed the box
     # Change self.owner in Box object (from box.py) to player's identity
     def checkBoxes(self, coordinates, player):
         # TODO: Victor
-        return
+   
+        
+        
+        
+        return 

@@ -17,9 +17,12 @@ class DotsAndBoxes:
     def play(self):
         # TODO: Chris
         self.board.displayBoard()
-        while (len(self.board.available_moves) > 0):
-            self.playerTurn(self)
-        self.getWinner(self)
+        
+        # Error: No available_moves() function in board
+        #while (len(self.board.available_moves) > 0):
+        #    self.playerTurn()
+        
+        self.getWinner()
 
     # Handles user input
     def playerTurn(self):
@@ -35,7 +38,20 @@ class DotsAndBoxes:
     # Determine who won, print out final state and relevant data
     def getWinner(self):
         # TODO: Victor
-        return
+        winner = ""
+        # Player 1 score > Player 2 score
+        if (self.board.score[0] > self.board.score[1]): 
+            winner = "Player 1 Wins!"
+            
+        # Player 1 score < Player 2 score     
+        elif (self.board.score[0] < self.board.score[1]):
+            winner = "Player 2 Wins!"
+            
+        # Player 1 score = Player 2 score
+        elif (self.board.score[0] == self.board.score[1]):
+            winner = "Tie!"
+            
+        return winner
 
 # Main running order of the code
 if __name__ == '__main__':
