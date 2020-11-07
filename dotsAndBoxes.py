@@ -38,20 +38,21 @@ class DotsAndBoxes:
     # Determine who won, print out final state and relevant data
     def getWinner(self):
         # TODO: Victor
-        winner = ""
+        player1 = self.board.score[0]
+        player2 = self.board.score[1]
+        
         # Player 1 score > Player 2 score
-        if (self.board.score[0] > self.board.score[1]): 
-            winner = "Player 1 Wins!"
+        if (player1 > player2): 
+            print("Player 1 Wins! --> ","Player 1 Score:",player1,"Player 2 Score:",player2)
             
         # Player 1 score < Player 2 score     
-        elif (self.board.score[0] < self.board.score[1]):
-            winner = "Player 2 Wins!"
+        elif (player1 < player2):
+            print("Player 2 Wins! --> ","Player 1 Score:",player1,"Player 2 Score:",player2)
             
         # Player 1 score = Player 2 score
-        elif (self.board.score[0] == self.board.score[1]):
-            winner = "Tie!"
+        elif (player1 == player2):
+            print("Tie! --> ","Player 1 Score:",player1,"Player 2 Score:",player2)
             
-        return winner
 
 # Main running order of the code
 if __name__ == '__main__':
