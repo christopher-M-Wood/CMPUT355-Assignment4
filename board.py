@@ -10,13 +10,14 @@ class Board:
     
     # Initializer (takesnumber of rows and columns)
     def __init__(self, rows, cols):
+        # Convert string input to integer
         self.row = int(rows)
         self.col = int(cols)
         
         self.score = [0,0] # Format: [p1,p2]
         self.dimensions = [self.row, self.col]
         
-        # TO DO self.available_moves = self.generateMoves()
+        # TODO self.available_moves = self.generateMoves()
         
         self.completed_moves = []
         self.possible_boxes = self.generateBoxes(self.row,self.col)
@@ -107,5 +108,26 @@ class Board:
     def checkBoxes(self, coordinates, player):
         # TODO: Victor
         
-    
-        return 
+        #By default
+        box = False
+        #Get Player's current score
+        player1 = self.board.score[0]
+        player2 = self.board.score[1]
+                
+        # Check if tuple coordinates in box list
+        if coordinates in self.possible_boxes:
+            
+            #Do something
+            
+           #If box is completed 
+            box = True
+            # Player 0 = AI, 1 = Person (from box.py)
+            if player == "AI":
+                player1 += 1
+                box.filled_by = 0
+            elif player == "Human":
+                player2 += 1
+                box.filled_by = 1
+        
+           
+        return box
