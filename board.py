@@ -43,7 +43,7 @@ class Board:
         for i in range(0,rows):
             for j in range(0,cols):
                 self.box = box.Box(i, j)
-                self.box_list.append(box)
+                self.box_list.append(self.box)
         return self.box_list
 
     # Prints a text representation of the current board state for the command line
@@ -132,8 +132,8 @@ class Board:
         #By default
         box = False
         #Get Player's current score
-        player1 = self.board.score[0]
-        player2 = self.board.score[1]
+        player1 = self.score[0]
+        player2 = self.score[1]
                 
         # For box in box_list, if coordinates in box.lines
         for b in self.box_list:
