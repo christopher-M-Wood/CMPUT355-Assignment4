@@ -10,37 +10,38 @@ from ast import literal_eval as make_tuple
 class DotsAndBoxes:
     # Initializer
     def __init__(self,x,y):
-        # TODO: Chris
         self.board = board.Board(x,y)
 
     # The game loop
     def play(self):
-        # TODO: Chris
         self.board.displayBoard()
         
         while (len(self.board.available_moves) > 0):
-            self.playerTurn()
+            self.playerTurn("player1")
+            self.playerTurn("player2")  #To be replaced with the AI
         
         self.getWinner()
 
     # Handles user input
-    def playerTurn(self):
-        # TODO: Chris
+    def playerTurn(self, player):
 
         # TODO: If Box is completed, current player continues
         # Victor -> I think we can return True/False in connectDots 
         #           to determine if current player continues
-
-        move = input ('Enter your move ([Point1] [Point2]): ')
-        moves = move.split(' ')
-        while (len(moves) != 2):
-            move = input('Please enter moves according to the form [x1,y1] [x2,y2]: ')
+        play_again = True
+        while (play_again):
+            play_again = False
+            move = input (player + ' enter your move ([Point1] [Point2]): ')
             moves = move.split(' ')
-        l = make_tuple(moves[0])
-        k = make_tuple(moves[1])
+            while (len(moves) != 2):
+                move = input('Please enter moves according to the form [x1,y1] [x2,y2]: ')
+                moves = move.split(' ')
+            l = make_tuple(moves[0])
+            k = make_tuple(moves[1])
 
-        self.board.connectDots((l, k), 'Human')
-        self.board.displayBoard()
+            play_again = self.board.connectDots((l, k), player)
+            self.board.displayBoard()
+
 
     # Determine who won, print out final state and relevant data
     def getWinner(self):
@@ -63,7 +64,6 @@ class DotsAndBoxes:
 
 # Main running order of the code
 if __name__ == '__main__':
-    # TODO: Chris
     if (len(sys.argv) < 3):
         print('Please call this file as \'python3 dotsAndBoxes.py [X] [Y]')
     else:
