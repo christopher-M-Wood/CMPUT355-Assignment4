@@ -112,6 +112,9 @@ class Board:
         if coordinates in self.available_moves:
         	self.available_moves.remove(coordinates)
         	self.completed_moves.append((coordinates[0],coordinates[1]))
+        elif ((coordinates[1],coordinates[0])) in self.available_moves:
+            self.available_moves.remove((coordinates[1],coordinates[0]))
+            self.completed_moves.append((coordinates[1],coordinates[0]))
         else: 
         	print("Error coordinates entered not valid")	
         
