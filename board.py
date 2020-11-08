@@ -61,7 +61,7 @@ class Board:
             vert_row = ""
             for j in range(0,self.dimensions[1]):
                 cell_width = ""
-                if ((j,i),(j,i+1)) in self.completed_moves or ((j,i+1),(j,i)) in self.completed moves:
+                if ((j,i),(j,i+1)) in self.completed_moves or ((j,i+1),(j,i)) in self.completed_moves:
                     cell_width += "|"
                 else:
                     cell_width += " "
@@ -71,7 +71,7 @@ class Board:
             box_marker_row = ""
             for j in range(0,self.dimensions[1]):
                 cell_width = ""
-                if ((j,i),(j,i+1)) in self.completed_moves or ((j,i+1),(j,i)) in self.completed moves:
+                if ((j,i),(j,i+1)) in self.completed_moves or ((j,i+1),(j,i)) in self.completed_moves:
                     cell_width += "|"
                 else:
                     cell_width += " "
@@ -144,11 +144,11 @@ class Board:
                     if b.filled_by == None:
                         # Player 0 = AI, 1 = Person (from box.py)
                         if player == "AI":
-                             player1 += 1       #Increment score
-                             b.filled_by = 0  #Set who completed the box
+                             self.score[0] = player1 + 1    #Increment score
+                             b.filled_by = 0                #Set who completed the box
                         elif player == "Human":
-                             player2 += 1       #Increment score 
-                             b.filled_by = 1  #Set who completed the box
+                             self.score[1] = player2 + 1    #Increment score 
+                             b.filled_by = 1                #Set who completed the box
            
         return box
 
