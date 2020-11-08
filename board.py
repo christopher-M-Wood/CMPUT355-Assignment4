@@ -145,10 +145,10 @@ class Board:
                         # Player 0 = AI, 1 = Person (from box.py)
                         if player == "AI":
                              player1 += 1       #Increment score
-                             box.filled_by = 0  #Set who completed the box
+                             b.filled_by = 0  #Set who completed the box
                         elif player == "Human":
                              player2 += 1       #Increment score 
-                             box.filled_by = 1  #Set who completed the box
+                             b.filled_by = 1  #Set who completed the box
            
         return box
 

@@ -18,7 +18,6 @@ class DotsAndBoxes:
         # TODO: Chris
         self.board.displayBoard()
         
-        
         while (len(self.board.available_moves) > 0):
             self.playerTurn()
         
@@ -32,7 +31,7 @@ class DotsAndBoxes:
         # Victor -> I think we can return True/False in connectDots 
         #           to determine if current player continues
 
-        move = input ('Enter your move ([Pt1] [Pt2]): ')
+        move = input ('Enter your move ([Point1] [Point2]): ')
         moves = move.split(' ')
         while (len(moves) != 2):
             move = input('Please enter moves according to the form [x1,y1] [x2,y2]: ')
