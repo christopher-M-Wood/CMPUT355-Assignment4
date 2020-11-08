@@ -17,7 +17,7 @@ class Board:
         self.score = [0,0] # Format: [p1,p2]
         self.dimensions = [self.row, self.col]
         
-        # TODO self.available_moves = self.generateMoves()
+        self.available_moves = self.generateMoves(self.row, self.col)
         
         self.completed_moves = []
         self.possible_boxes = self.generateBoxes(self.row,self.col)
@@ -109,14 +109,13 @@ class Board:
     def connectDots(self, coordinates, player):
         # TODO: Ian
        	completeBox = False
-        print(self.available_moves)
         if coordinates in self.available_moves:
         	self.available_moves.remove(coordinates)
         	self.completed_moves.append((coordinates[0],coordinates[1]))
         else: 
         	print("Error coordinates entered not valid")	
         
-        if (checkBoxes(coordinates, player)):
+        if (self.checkBoxes(coordinates, player)):
         	completeBox = True;
         else:
         	completeBox = False;
