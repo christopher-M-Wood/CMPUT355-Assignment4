@@ -13,30 +13,38 @@ class Board:
         # Convert string input to integer
         self.row = int(rows)
         self.col = int(cols)
-        
+
+        self.box_list = []
         self.score = [0,0] # Format: [p1,p2]
         self.dimensions = [self.row, self.col]
         
-        # TODO self.available_moves = self.generateMoves()
+        self.available_moves = self.generateMoves(self.row,self.col)
         
         self.completed_moves = []
         self.possible_boxes = self.generateBoxes(self.row,self.col)
 
     # Create a queue of all available moves/lines that can be played on this board, given a particular number of rows and columns
     def generateMoves(self, r, c):
+        available = []
+        for i in range(0,r):
+            for j in range(0,c-1):
+                available.append(((i,j),(i, j+1)))
+        for i in range(0,r-1):
+            for j in range(0,c):
+                available.append(((i,j),(i+1, j)))
+
+        return available
         # Should store each line on the board as a set (tuple) of coordinates in a queue
         # NOTE from Jared: I coded the text representation to use ((x,y),(x,y)), so a tuple of tuples
-        # TODO: Ian
-        return 
+        # TODO: Ian 
 
     # Creates a list of Box objects (from box.py)
     def generateBoxes(self, rows, cols):
-        box_list = []
         for i in range(0,rows):
             for j in range(0,cols):
                 self.box = box.Box(i, j)
-                box_list.append(box)
-        return box_list
+                self.box_list.append(box)
+        return self.box_list
 
     # Prints a text representation of the current board state for the command line
     def displayBoard(self):
@@ -100,11 +108,24 @@ class Board:
     #   - Check our list of boxes (call checkBoxes()) to determine if we have an completed boxes with this new line
     def connectDots(self, coordinates, player):
         # TODO: Ian
-        return 
+        completeBox = False
+        if coordinates in self.available_moves:
+        	self.available_moves.remove(coordinates)
+        	self.completed_moves.append((coordinates[0],coordinates[1]))
+        else: 
+        	print("Error coordinates entered not valid")	
+        
+        if (self.checkBoxes(coordinates, player)):
+        	completeBox = True;
+        else:
+        	completeBox = False;
 
-    # Checks the list of boxes to see if the coordinates for the newly-added line completes a box
+        return completeBox 
+
+    # Checks the list of boxes to see if the coordinates for the newly-added line from connectDots() completes a box
     # Increment score for player who completed the box
     # Change self.owner in Box object (from box.py) to player's identity
+    # Return True if box is completed
     def checkBoxes(self, coordinates, player):
         # TODO: Victor
         
@@ -114,20 +135,20 @@ class Board:
         player1 = self.board.score[0]
         player2 = self.board.score[1]
                 
-        # Check if tuple coordinates in box list
-        if coordinates in self.possible_boxes:
-            
-            #Do something
-            
-           #If box is completed 
-            box = True
-            # Player 0 = AI, 1 = Person (from box.py)
-            if player == "AI":
-                player1 += 1
-                box.filled_by = 0
-            elif player == "Human":
-                player2 += 1
-                box.filled_by = 1
-        
+        # For box in box_list, if coordinates in box.lines
+        for b in self.box_list:
+            if coordinates in b.lines:
+                b.connect(coordinates) #Call connect() function in box.py
+                if b.complete is True: #Check if box is completed after the call
+                    box = True         #Set default to True
+                    if b.filled_by == None:
+                        # Player 0 = AI, 1 = Person (from box.py)
+                        if player == "AI":
+                             player1 += 1       #Increment score
+                             box.filled_by = 0  #Set who completed the box
+                        elif player == "Human":
+                             player2 += 1       #Increment score 
+                             box.filled_by = 1  #Set who completed the box
            
         return box
+

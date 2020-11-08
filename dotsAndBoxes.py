@@ -3,9 +3,9 @@
 #   self.depth = depth of search
 
 import sys
-
 import board
 import box
+from ast import literal_eval as make_tuple
 
 class DotsAndBoxes:
     # Initializer
@@ -18,21 +18,29 @@ class DotsAndBoxes:
         # TODO: Chris
         self.board.displayBoard()
         
-        # Error: No available_moves() function in board
-        #while (len(self.board.available_moves) > 0):
-        #    self.playerTurn()
+        
+        while (len(self.board.available_moves) > 0):
+            self.playerTurn()
         
         self.getWinner()
 
     # Handles user input
     def playerTurn(self):
         # TODO: Chris
+
+        # TODO: If Box is completed, current player continues
+        # Victor -> I think we can return True/False in connectDots 
+        #           to determine if current player continues
+
         move = input ('Enter your move ([Pt1] [Pt2]): ')
         moves = move.split(' ')
         while (len(moves) != 2):
             move = input('Please enter moves according to the form [x1,y1] [x2,y2]: ')
             moves = move.split(' ')
-        self.board.connectDots([moves[0], moves[1]], 'Human')
+        l = make_tuple(moves[0])
+        k = make_tuple(moves[1])
+
+        self.board.connectDots((l, k), 'Human')
         self.board.displayBoard()
 
     # Determine who won, print out final state and relevant data
