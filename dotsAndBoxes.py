@@ -3,6 +3,7 @@
 #   self.depth = depth of search
 
 import sys
+from ast import literal_eval as make_tuple
 
 import board
 import box
@@ -19,8 +20,8 @@ class DotsAndBoxes:
         self.board.displayBoard()
         
         # Error: No available_moves() function in board
-        #while (len(self.board.available_moves) > 0):
-        #    self.playerTurn()
+        while (len(self.board.available_moves) > 0):
+            self.playerTurn()
         
         self.getWinner()
 
@@ -32,7 +33,11 @@ class DotsAndBoxes:
         while (len(moves) != 2):
             move = input('Please enter moves according to the form [x1,y1] [x2,y2]: ')
             moves = move.split(' ')
-        self.board.connectDots([moves[0], moves[1]], 'Human')
+        
+        l = make_tuple(moves[0])
+        k = make_tuple(moves[1])
+
+        self.board.connectDots((l, k), 'Human')
         self.board.displayBoard()
 
     # Determine who won, print out final state and relevant data

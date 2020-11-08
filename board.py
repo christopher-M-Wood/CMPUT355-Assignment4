@@ -24,10 +24,18 @@ class Board:
 
     # Create a queue of all available moves/lines that can be played on this board, given a particular number of rows and columns
     def generateMoves(self, r, c):
+        available = []
+        for i in range(0,r):
+            for j in range(0,c-1):
+                available.append(((i,j),(i, j+1)))
+        for i in range(0,r-1):
+            for j in range(0,c):
+                available.append(((i,j),(i+1, j)))
+
+        return available
         # Should store each line on the board as a set (tuple) of coordinates in a queue
         # NOTE from Jared: I coded the text representation to use ((x,y),(x,y)), so a tuple of tuples
         # TODO: Ian
-        return 
 
     # Creates a list of Box objects (from box.py)
     def generateBoxes(self, rows, cols):
@@ -94,14 +102,28 @@ class Board:
 
 
     # Check self.available_moves for the coordinates given in the parameters
-    # If the coordinates are in self.available_moves then:
-    #   - Remove the coordinates from self.available_moves
+    # If the coordinates are in self.possible_moves then:
+    #   - Remove the coordinates from self.possible_moves
     #   - Add the coordinates to self.completed_moves
     #   - Check our list of boxes (call checkBoxes()) to determine if we have an completed boxes with this new line
     def connectDots(self, coordinates, player):
         # TODO: Ian
-        return 
+       	completeBox = False
+        print(self.available_moves)
+        if coordinates in self.available_moves:
+        	self.available_moves.remove(coordinates)
+        	self.completed_moves.append((coordinates[0],coordinates[1]))
+        else: 
+        	print("Error coordinates entered not valid")	
+        
+        if (checkBoxes(coordinates, player)):
+        	completeBox = True;
+        else:
+        	completeBox = False;
+        
 
+
+        return completeBox
     # Checks the list of boxes to see if the coordinates for the newly-added line completes a box
     # Increment score for player who completed the box
     # Change self.owner in Box object (from box.py) to player's identity
@@ -114,7 +136,7 @@ class Board:
         player1 = self.board.score[0]
         player2 = self.board.score[1]
                 
-        # Check if tuple coordinates in box list
+        # Check if the line is in any box's list
         if coordinates in self.possible_boxes:
             
             #Do something
