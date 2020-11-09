@@ -17,8 +17,8 @@ class DotsAndBoxes:
         self.board.displayBoard()
         
         while (len(self.board.available_moves) > 0):
-            self.playerTurn("player1")
-            self.playerTurn("player2")  #To be replaced with the AI
+            self.playerTurn("Player1")
+            self.playerTurn("Player2")  #To be replaced with the AI
         
         self.getWinner()
 

@@ -52,7 +52,7 @@ class Board:
             horiz_row = ""
             for j in range(0,self.dimensions[1]):
                 cell_width = "."
-                if ((j,i),(j+1,i)) in self.completed_moves or ((j+1,i),(j,i)) in self.completed_moves:
+                if ((j,i),(j+1,i)) in self.completed_moves: #or ((j+1,i),(j,i)) in self.completed_moves:
                     cell_width += "_____"
                 else:
                     cell_width += "     "
@@ -61,7 +61,7 @@ class Board:
             vert_row = ""
             for j in range(0,self.dimensions[1]):
                 cell_width = ""
-                if ((j,i),(j,i+1)) in self.completed_moves or ((j,i+1),(j,i)) in self.completed_moves:
+                if ((j,i),(j,i+1)) in self.completed_moves: #or ((j,i+1),(j,i)) in self.completed_moves:
                     cell_width += "|"
                 else:
                     cell_width += " "
@@ -71,7 +71,7 @@ class Board:
             box_marker_row = ""
             for j in range(0,self.dimensions[1]):
                 cell_width = ""
-                if ((j,i),(j,i+1)) in self.completed_moves or ((j,i+1),(j,i)) in self.completed_moves:
+                if ((j,i),(j,i+1)) in self.completed_moves: #or ((j,i+1),(j,i)) in self.completed_moves:
                     cell_width += "|"
                 else:
                     cell_width += " "
@@ -93,7 +93,7 @@ class Board:
         horiz_row = ""
         for j in range(0,self.dimensions[1]):
             cell_width = "."
-            if ((self.dimensions[0],j),(self.dimensions[0]+1,j)) in self.completed_moves or ((self.dimensions[0]+1,j),(self.dimensions[0],j)) in self.completed_moves:
+            if ((self.dimensions[0],j),(self.dimensions[0]+1,j)) in self.completed_moves: #or ((self.dimensions[0]+1,j),(self.dimensions[0],j)) in self.completed_moves:
                 cell_width += "_____"
             else:
                 cell_width += "     "
@@ -118,10 +118,10 @@ class Board:
         else: 
         	print("Error coordinates entered not valid")	
         
-        if (self.checkBoxes(coordinates, player)):
-        	completeBox = True;
+        if (self.checkBoxes(coordinates, player) == True):
+            	completeBox = True
         else:
-        	completeBox = False;
+        	completeBox = False
 
         return completeBox 
 
@@ -134,9 +134,6 @@ class Board:
         
         #By default
         box = False
-        #Get Player's current score
-        player1 = self.score[0]
-        player2 = self.score[1]
                 
         # For box in box_list, if coordinates in box.lines
         for b in self.box_list:
@@ -146,12 +143,15 @@ class Board:
                     box = True         #Set default to True
                     if b.filled_by == None:
                         # Player 0 = AI, 1 = Person (from box.py)
-                        if player == "AI":
-                             self.score[0] = player1 + 1    #Increment score
-                             b.filled_by = 0                #Set who completed the box
-                        elif player == "Human":
-                             self.score[1] = player2 + 1    #Increment score 
-                             b.filled_by = 1                #Set who completed the box
-           
+                        if player == "Player1":
+                             self.score[0] += 1    #Increment score
+                             b.filled_by = 0       #Set who completed the box
+                             break
+                        elif player == "Player2":
+                             self.score[1] += 1    #Increment score 
+                             b.filled_by = 1       #Set who completed the box
+                             break
+            else:
+                break
         return box
 
