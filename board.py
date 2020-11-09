@@ -106,9 +106,9 @@ class Board:
     #   - Remove the coordinates from self.possible_moves
     #   - Add the coordinates to self.completed_moves
     #   - Check our list of boxes (call checkBoxes()) to determine if we have an completed boxes with this new line
+    #   - RETURN: 0-Not a valid move, 1-Valid move, 2-Completed a box (Chris)
     def connectDots(self, coordinates, player):
         # TODO: Ian
-        completeBox = False
         if coordinates in self.available_moves:
         	self.available_moves.remove(coordinates)
         	self.completed_moves.append((coordinates[0],coordinates[1]))
@@ -116,14 +116,13 @@ class Board:
             self.available_moves.remove((coordinates[1],coordinates[0]))
             self.completed_moves.append((coordinates[1],coordinates[0]))
         else: 
-        	print("Error coordinates entered not valid")	
+            print('Error. Coordinates not valid')
+            return 0
         
         if (self.checkBoxes(coordinates, player) == True):
-            	completeBox = True
+            return 2
         else:
-        	completeBox = False
-
-        return completeBox 
+            return 1
 
     # Checks the list of boxes to see if the coordinates for the newly-added line from connectDots() completes a box
     # Increment score for player who completed the box

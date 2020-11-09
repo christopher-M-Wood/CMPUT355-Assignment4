@@ -28,9 +28,11 @@ class DotsAndBoxes:
         # TODO: If Box is completed, current player continues
         # Victor -> I think we can return True/False in connectDots 
         #           to determine if current player continues
-        play_again = True
-        while (play_again):
-            play_again = False
+        # Play again is a trinary value (0,1,2) based on the output key from board.py connectDots
+        play_again = 0
+        while (play_again != 1 and len(self.board.available_moves) > 0):
+            if (play_again == 2):
+                print(player + ' completed a box. Please play another move.')
             move = input (player + ' enter your move ([Point1] [Point2]): ')
             moves = move.split(' ')
             while (len(moves) != 2):
@@ -41,8 +43,7 @@ class DotsAndBoxes:
 
             play_again = self.board.connectDots((l, k), player)
             self.board.displayBoard()
-
-
+            
     # Determine who won, print out final state and relevant data
     def getWinner(self):
         # TODO: Victor
