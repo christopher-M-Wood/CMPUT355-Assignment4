@@ -40,10 +40,10 @@ class Board:
 
     # Creates a list of Box objects (from box.py)
     def generateBoxes(self, rows, cols):
-        for i in range(0,rows):
-            for j in range(0,cols):
-                self.box = box.Box(i, j)
-                self.box_list.append(self.box)
+        for i in range(0,rows-1):
+            for j in range(0,cols-1):
+                a_box = box.Box(i,j)
+                self.box_list.append(a_box)
         return self.box_list
 
     # Prints a text representation of the current board state for the command line
@@ -81,7 +81,7 @@ class Board:
                 if j != self.dimensions[1]-1:
                     box_found = False
                     for box in self.possible_boxes:
-                        if self.box.top_left[0] == j and self.box.top_left[1] == i and box.complete:
+                        if box.top_left[0] == j and box.top_left[1] == i and box.complete:
                             cell_width += str(box.filled_by)
                             box_found = True
                     if box_found == False:
@@ -154,14 +154,14 @@ class Board:
                     if b.complete == True: #Check if box is completed after the call
                         box = True         #Set default to True
                         if b.filled_by == None:
-                            # Player 0 = AI, 1 = Person (from box.py)
+                            # Player 1 or Player 2
                             if player == "Player1":
                                 self.score[0] += 1    #Increment score
-                                b.filled_by = 0       #Set who completed the box
+                                b.filled_by = 1       #Set who completed the box
                                 break
                             elif player == "Player2":
                                 self.score[1] += 1    #Increment score 
-                                b.filled_by = 1       #Set who completed the box
+                                b.filled_by = 2       #Set who completed the box
                                 break
             
         return box
