@@ -152,7 +152,6 @@ class Board:
                              self.score[1] += 1    #Increment score 
                              b.filled_by = 1       #Set who completed the box
                              break
-            else:
-                break
+            
         return box
 
