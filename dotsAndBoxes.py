@@ -32,7 +32,7 @@ class DotsAndBoxes:
         play_again = 0
         while (play_again != 1 and len(self.board.available_moves) > 0):
             if (play_again == 2):
-                print(player + ' completed '+ self.board.completed + 'box. Please play another move.')
+                print(player + ' completed '+ str(self.board.completed) + ' box. Please play another move.')
             move = input (player + ' enter your move ([Point1] [Point2]): ')
             moves = move.split(' ')
             while (len(moves) != 2):
