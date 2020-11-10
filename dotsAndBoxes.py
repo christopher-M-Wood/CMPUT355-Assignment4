@@ -35,7 +35,7 @@ class DotsAndBoxes:
                 if (self.board.completed > 1):
                     print(player + ' completed ' + str(self.board.completed) + '  boxes. Please play another move.')
                 else:
-                    print(player + ' completed a box Please player another move.')
+                    print(player + ' completed a box. Please play another move.')
 
             move = input (player + ' enter your move ([Point1] [Point2]): ')
             moves = move.split(' ')
