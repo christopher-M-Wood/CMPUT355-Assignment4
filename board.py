@@ -136,23 +136,25 @@ class Board:
         #By default
         box = False
                 
-        # For box in box_list, if coordinates in box.lines
+        # For box in box_list
         for b in self.box_list:
-            if coordinates in b.lines:
-                b.connect(coordinates) #Call connect() function in box.py
-                if b.complete == True: #Check if box is completed after the call
-                    box = True         #Set default to True
-                    if b.filled_by == None:
-                        # Player 0 = AI, 1 = Person (from box.py)
-                        if player == "Player1":
-                             self.score[0] += 1    #Increment score
-                             b.filled_by = 0       #Set who completed the box
-                             break
-                        elif player == "Player2":
-                             self.score[1] += 1    #Increment score 
-                             b.filled_by = 1       #Set who completed the box
-                             break
-            else:
-                break
+            # For each line of the box four edges
+            for line in b.lines:
+                # Check if coordinates match an edge
+                if coordinates == line:
+                    b.connect(coordinates) #Call connect() function in box.py
+                    if b.complete == True: #Check if box is completed after the call
+                        box = True         #Set default to True
+                        if b.filled_by == None:
+                            # Player 0 = AI, 1 = Person (from box.py)
+                            if player == "Player1":
+                                self.score[0] += 1    #Increment score
+                                b.filled_by = 0       #Set who completed the box
+                                break
+                            elif player == "Player2":
+                                self.score[1] += 1    #Increment score 
+                                b.filled_by = 1       #Set who completed the box
+                                break
+            
         return box
 
