@@ -140,7 +140,7 @@ class Board:
         for b in self.box_list:
             if coordinates in b.lines:
                 b.connect(coordinates) #Call connect() function in box.py
-                if b.complete is True: #Check if box is completed after the call
+                if b.complete == True: #Check if box is completed after the call
                     box = True         #Set default to True
                     if b.filled_by == None:
                         # Player 0 = AI, 1 = Person (from box.py)
