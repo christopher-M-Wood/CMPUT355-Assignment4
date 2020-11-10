@@ -5,24 +5,52 @@
 import sys
 import board
 import box
-from ast import literal_eval as make_tuple
+
+info = 'CONTROLS\n--------\nh,help\t : Prints this help guide\ni,input\t : Prints the proper format for inputing a move\nm,moves\t : Prints the available moves\nq,quit\t : Prints the current winner and then exits the program\ns,score\t : Prints the current score'
+input_format = 'Moves are to be formatted as point pairs such that \'(x1,y1) (x2,y2)\''
 
 class DotsAndBoxes:
     # Initializer
     def __init__(self,x,y):
-        self.board = board.Board(x,y)
+        self.board = board.Board(x+1,y+1)
 
     # The game loop
     def play(self):
-        self.board.displayBoard()
+        while True:
+            self.board.displayBoard()
+            while (len(self.board.available_moves) > 0):
+                self.playerTurn("Player 1")
+                self.playerTurn("Player 2")  #To be replaced with the AI
         
-        while (len(self.board.available_moves) > 0):
-            self.playerTurn("Player 1")
-            self.playerTurn("Player 2")  #To be replaced with the AI
-        
-        self.getWinner()
+            self.getWinner()
+            temp = self.takeInput('Would you like to play again? (Y/N): ')
+            if (temp == 'Y' or temp == 'y'):
+               self.board = board.Board(self.board.dimensions[0], self.board.dimensions[1]) 
+            else:
+                break
 
-    # Handles user input
+    def takeInput(self, inputString):
+        out = ''
+        while (out == ''):
+            val = input(inputString)
+            if (val == 'h' or val == 'help'):
+                print(info)
+            elif (val == 'i' or val == 'input'):
+                print(input_format)
+            elif (val == 'm' or val == 'moves'):
+                print('Possible moves:')
+                for i in self.board.available_moves:
+                    print(i)
+            elif (val == 'q' or val == 'quit'):
+                self.getWinner()
+                sys.exit()
+            elif (val == 's' or val == 'score'):
+                print('Current score -- Player1: ' + str(self.board.score[0]) + ' Player2: ' + str(self.board.score[1]))
+            else:
+                out = val
+        return out
+
+    # Takes a player turn
     def playerTurn(self, player):
 
         # TODO: If Box is completed, current player continues
@@ -37,13 +65,13 @@ class DotsAndBoxes:
                 else:
                     print(player + ' completed ' + str(self.board.completed) + ' box. Please player another move.')
                     
-            move = input (player + ' enter your move ([Point1] [Point2]): ')
+            move = self.takeInput(player + ' enter your move: ')
             moves = move.split(' ')
             while (len(moves) != 2):
-                move = input('Please enter moves according to the form [x1,y1] [x2,y2]: ')
+                move = self.takeInput('Please enter moves according to the form \'(x1,y1) (x2,y2)\': ')
                 moves = move.split(' ')
-            l = make_tuple(moves[0])
-            k = make_tuple(moves[1])
+            l = (int(moves[0][1]), int(moves[0][3]))
+            k = (int(moves[1][1]), int(moves[1][3]))
 
             play_again = self.board.connectDots((l, k), player)
             self.board.displayBoard()
@@ -72,5 +100,6 @@ if __name__ == '__main__':
     if (len(sys.argv) < 3):
         print('Please call this file as \'python3 dotsAndBoxes.py [X] [Y]')
     else:
-        dab = DotsAndBoxes(sys.argv[1], sys.argv[2])
+        print(info)
+        dab = DotsAndBoxes(int(sys.argv[1]), int(sys.argv[2]))
         dab.play()

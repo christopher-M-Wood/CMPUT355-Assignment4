@@ -41,8 +41,8 @@ class Board:
 
     # Creates a list of Box objects (from box.py)
     def generateBoxes(self, rows, cols):
-        for i in range(0,rows-1):
-            for j in range(0,cols-1):
+        for i in range(rows-1):
+            for j in range(cols-1):
                 a_box = box.Box(i,j)
                 self.box_list.append(a_box)
         return self.box_list
