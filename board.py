@@ -15,11 +15,6 @@ class Board:
         self.col = int(cols)
 
         self.completed = 0
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> 7dd96b82cf89ec50723f727437139eaf9824bf55
         self.box_list = []
         self.score = [0,0] # Format: [p1,p2]
         self.dimensions = [self.row, self.col]
@@ -117,7 +112,7 @@ class Board:
     #   - RETURN: 0-Not a valid move, 1-Valid move, 2-Completed a box (Chris)
     def connectDots(self, coordinates, player):
         # TODO: Ian
-
+        flipped = 0
         if coordinates in self.available_moves:
         	self.available_moves.remove(coordinates)
         	self.completed_moves.append((coordinates[0],coordinates[1]))
@@ -130,18 +125,12 @@ class Board:
             print('Error. Coordinates not valid')
             return 0
 
-<<<<<<< HEAD
         if flipped == 1:
             new_coordinate = (coordinates[1], coordinates[0])
             if (self.checkBoxes(new_coordinate, player) == True):
                 return 2
         if (self.checkBoxes(coordinates, player) == True):
                 return 2
-=======
-    
-        if (self.checkBoxes(coordinates, player) == True):
-            return 2
->>>>>>> 7dd96b82cf89ec50723f727437139eaf9824bf55
         else:
             return 1
 
@@ -164,13 +153,9 @@ class Board:
                 if coordinates == line:
                     b.connect(coordinates) #Call connect() function in box.py
                     if b.complete == True: #Check if box is completed after the call
-<<<<<<< HEAD
                         
                         self.completed += 1
 
-=======
-                        self.completed += 1
->>>>>>> 7dd96b82cf89ec50723f727437139eaf9824bf55
                         box = True         #Set default to True
                         if b.filled_by == None:
                             # Player 1 or Player 2
