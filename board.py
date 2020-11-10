@@ -130,8 +130,7 @@ class Board:
             new_coordinate = (coordinates[1], coordinates[0])
             if (self.checkBoxes(new_coordinate, player) == True):
                 return 2
-        elif flipped == 0:
-            if (self.checkBoxes(coordinates, player) == True):
+        if (self.checkBoxes(coordinates, player) == True):
                 return 2
         else:
             return 1
@@ -161,11 +160,11 @@ class Board:
                         box = True         #Set default to True
                         if b.filled_by == None:
                             # Player 1 or Player 2
-                            if player == "Player1":
+                            if player == "Player 1":
                                 self.score[0] += 1    #Increment score
                                 b.filled_by = 1       #Set who completed the box
                                 break
-                            elif player == "Player2":
+                            elif player == "Player 2":
                                 self.score[1] += 1    #Increment score 
                                 b.filled_by = 2       #Set who completed the box
                                 break
