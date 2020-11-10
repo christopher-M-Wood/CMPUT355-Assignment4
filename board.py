@@ -14,6 +14,8 @@ class Board:
         self.row = int(rows)
         self.col = int(cols)
 
+        self.completed = 0
+
         self.box_list = []
         self.score = [0,0] # Format: [p1,p2]
         self.dimensions = [self.row, self.col]
@@ -143,7 +145,8 @@ class Board:
         
         #By default
         box = False
-                
+        self.completed = 0
+
         # For box in box_list
         for b in self.box_list:
             # For each line of the box four edges
@@ -152,6 +155,9 @@ class Board:
                 if coordinates == line:
                     b.connect(coordinates) #Call connect() function in box.py
                     if b.complete == True: #Check if box is completed after the call
+                        
+                        self.completed += 1
+
                         box = True         #Set default to True
                         if b.filled_by == None:
                             # Player 1 or Player 2
