@@ -40,7 +40,7 @@ class DotsAndBoxes:
             elif (val == 'm' or val == 'moves'):
                 print('Possible moves:')
                 for i in self.board.available_moves:
-                    print(i)
+                    print(str(i)[1:-1])
             elif (val == 'q' or val == 'quit'):
                 self.getWinner()
                 sys.exit()
@@ -64,14 +64,18 @@ class DotsAndBoxes:
                     print(player + ' completed '+ str(self.board.completed) + ' boxes. Please play another move.')
                 else:
                     print(player + ' completed ' + str(self.board.completed) + ' box. Please player another move.')
-                    
-            move = self.takeInput(player + ' enter your move: ')
-            moves = move.split(' ')
-            while (len(moves) != 2):
-                move = self.takeInput('Please enter moves according to the form \'(x1,y1) (x2,y2)\': ')
-                moves = move.split(' ')
-            l = (int(moves[0][1]), int(moves[0][3]))
-            k = (int(moves[1][1]), int(moves[1][3]))
+            while True:
+                try:        
+                    move = self.takeInput(player + ' enter your move: ')
+                    moves = move.split(' ')
+                    while (len(moves) != 2):
+                        move = self.takeInput('Please enter moves according to the form \'(x1,y1) (x2,y2)\': ')
+                        moves = move.split(' ')
+                    l = (int(moves[0][1]), int(moves[0][3]))
+                    k = (int(moves[1][1]), int(moves[1][3]))
+                    break
+                except ValueError:
+                    print("Error. Please try again.")
 
             play_again = self.board.connectDots((l, k), player)
             self.board.displayBoard()
