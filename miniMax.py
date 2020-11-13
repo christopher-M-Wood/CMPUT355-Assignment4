@@ -47,8 +47,6 @@ class Minimax:
         # Iterate through children of current state to find best best move
         for child in board.children:
             if child.game_score == best_score:
-                print("Score:" + str(child.game_score))
-                print("Move: " + str(child.move))
                 move = child.move
                 return move
             # If there was no best move, set to last child's value

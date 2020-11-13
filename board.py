@@ -200,7 +200,7 @@ class Board:
 
             # Make the move on this child's board
             child.connectDots(move, child.player)
-            print(str(child.player))
+
 
             # Add this updated board state to current state's children states
             self.children.append(child)
