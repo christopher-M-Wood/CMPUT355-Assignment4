@@ -16,7 +16,7 @@ class DotsAndBoxes:
     # Initializer
     def __init__(self,x,y):
         self.board = board.Board(x+1,y+1)
-        self.algorithm = Minimax()
+        #self.algorithm = Minimax()
 
     # The game loop
     def play(self):
@@ -87,7 +87,7 @@ class DotsAndBoxes:
                 self.board.displayBoard()
 
         else: # AI Turn
-            self.board.player = player
+            algorithm = Minimax()
             while (play_again != 1 and len(self.board.available_moves) > 0):
                 if (play_again == 2):
                     if (self.board.completed > 1):
@@ -100,7 +100,7 @@ class DotsAndBoxes:
 
                 # For Minimax Move
                 print('\nThe AI is playing.\n')
-                move = self.algorithm.getMove(self.board)
+                move = algorithm.getMove(self.board)
                 l = move[0]
                 k = move[1]
                 print('\nAI played at ' + str(move)[1:-1])
