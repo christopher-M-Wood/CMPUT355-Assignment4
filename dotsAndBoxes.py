@@ -5,6 +5,9 @@
 import sys
 import board
 import box
+from minimax import Minimax
+import random
+
 
 info = 'CONTROLS\n--------\nh,help\t : Prints this help guide\ni,input\t : Prints the proper format for inputing a move\nm,moves\t : Prints the available moves\nq,quit\t : Prints the current winner and then exits the program\ns,score\t : Prints the current score'
 input_format = 'Moves are to be formatted as point pairs such that \'(x1,y1) (x2,y2)\''
@@ -13,6 +16,7 @@ class DotsAndBoxes:
     # Initializer
     def __init__(self,x,y):
         self.board = board.Board(x+1,y+1)
+        self.algorithm = Minimax()
 
     # The game loop
     def play(self):
@@ -58,27 +62,52 @@ class DotsAndBoxes:
         #           to determine if current player continues
         # Play again is a trinary value (0,1,2) based on the output key from board.py connectDots
         play_again = 0
-        while (play_again != 1 and len(self.board.available_moves) > 0):
-            if (play_again == 2):
-                if (self.board.completed > 1):
-                    print(player + ' completed '+ str(self.board.completed) + ' boxes. Please play another move.')
-                else:
-                    print(player + ' completed ' + str(self.board.completed) + ' box. Please player another move.')
-            while True:
-                try:        
-                    move = self.takeInput(player + ' enter your move: ')
-                    moves = move.split(' ')
-                    while (len(moves) != 2):
-                        move = self.takeInput('Please enter moves according to the form \'(x1,y1) (x2,y2)\': ')
+        self.board.player = player
+        if (player == "Player 1"):
+            while (play_again != 1 and len(self.board.available_moves) > 0):
+                if (play_again == 2):
+                    if (self.board.completed > 1):
+                        print(player + ' completed '+ str(self.board.completed) + ' boxes. Please play another move.')
+                    else:
+                        print(player + ' completed ' + str(self.board.completed) + ' box. Please player another move.')
+                while True:
+                    try:        
+                        move = self.takeInput(player + ' enter your move: ')
                         moves = move.split(' ')
-                    l = (int(moves[0][1]), int(moves[0][3]))
-                    k = (int(moves[1][1]), int(moves[1][3]))
-                    break
-                except ValueError:
-                    print("Error. Please try again.")
+                        while (len(moves) != 2):
+                            move = self.takeInput('Please enter moves according to the form \'(x1,y1) (x2,y2)\': ')
+                            moves = move.split(' ')
+                        l = (int(moves[0][1]), int(moves[0][3]))
+                        k = (int(moves[1][1]), int(moves[1][3]))
+                        break
+                    except ValueError:
+                        print("Error. Please try again.")
 
-            play_again = self.board.connectDots((l, k), player)
-            self.board.displayBoard()
+                play_again = self.board.connectDots((l, k), player)
+                self.board.displayBoard()
+
+        else: # AI Turn
+            self.board.player = player
+            while (play_again != 1 and len(self.board.available_moves) > 0):
+                if (play_again == 2):
+                    if (self.board.completed > 1):
+                        print('The AI completed '+ str(self.board.completed) + ' boxes. They play another move.')
+                    else:
+                        print('The AI completed ' + str(self.board.completed) + ' box. They play another move.')
+                
+                # For Random Move
+                #move = self.randomMove() 
+
+                # For Minimax Move
+                move = self.algorithm.getMove(self.board)
+                l = move[0]
+                k = move[1]
+                print('\nAI played at ' + str(move)[1:-1])
+                play_again = self.board.connectDots((l, k), player)
+                self.board.displayBoard()
+
+    def randomMove(self):
+        return random.choice(self.board.available_moves)
             
     # Determine who won, print out final state and relevant data
     def getWinner(self):
