@@ -99,6 +99,7 @@ class DotsAndBoxes:
                 #move = self.randomMove() 
 
                 # For Minimax Move
+                print('\nThe AI is playing.\n')
                 move = self.algorithm.getMove(self.board)
                 l = move[0]
                 k = move[1]
