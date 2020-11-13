@@ -25,7 +25,7 @@ class Board:
         self.completed_moves = []
         self.possible_boxes = self.generateBoxes(self.row,self.col)
 
-        self.player = "Player 1" # or "Player 2"
+        self.player = None # "Player 1" or "Player 2"
         self.move = None # Move that resulted in this state
         self.depth = 0 # Starting depth
         self.moves_remaining = len(self.available_moves)
@@ -181,27 +181,26 @@ class Board:
             child = Board(self.row, self.col)
 
             #Initialize child's values
-            child.move = move
-            child.row = self.row
-            child.col = self.col
-            child.player = self.player
             child.box_list = copy.deepcopy(self.box_list)
             child.score = copy.deepcopy(self.score)
-            child.game_score = 0
-            child.dimensions = [child.row, child.col]
+            child.game_score = copy.deepcopy(self.game_score)
             child.available_moves = copy.deepcopy(self.available_moves)
             child.completed_moves = copy.deepcopy(self.completed_moves)
-            child.possible_moves = copy.deepcopy(self.possible_boxes)
+            child.possible_boxes = copy.deepcopy(self.possible_boxes)
+
             if (self.player == "Player 1"):
                 child.player = "Player 2"
-            else:
+            elif (self.player == "Player 2"):
                 child.player = "Player 1"
+            
+            child.move = move
             child.depth = self.depth + 1
             child.moves_remaining = len(child.available_moves)
             child.children = []
 
             # Make the move on this child's board
             child.connectDots(move, child.player)
+            print(str(child.player))
 
             # Add this updated board state to current state's children states
             self.children.append(child)
