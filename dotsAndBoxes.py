@@ -5,7 +5,7 @@
 import sys
 import board
 import box
-from minimax import Minimax
+from miniMax import Minimax
 import random
 
 
@@ -16,7 +16,6 @@ class DotsAndBoxes:
     # Initializer
     def __init__(self,x,y):
         self.board = board.Board(x+1,y+1)
-        #self.algorithm = Minimax()
 
     # The game loop
     def play(self):
@@ -24,8 +23,12 @@ class DotsAndBoxes:
             self.board.displayBoard()
             while (len(self.board.available_moves) > 0):
                 self.playerTurn("Player 1")
-                self.playerTurn("Player 2")  #To be replaced with the AI
-        
+                # Second Human Player
+                # self.playerTurn("Player 2")
+                
+                # AI Player
+                self.computerTurn()
+
             self.getWinner()
             temp = self.takeInput('Would you like to play again? (Y/N): ')
             if (temp == 'Y' or temp == 'y'):
@@ -56,56 +59,44 @@ class DotsAndBoxes:
 
     # Takes a player turn
     def playerTurn(self, player):
-
-        # TODO: If Box is completed, current player continues
-        # Victor -> I think we can return True/False in connectDots 
-        #           to determine if current player continues
         # Play again is a trinary value (0,1,2) based on the output key from board.py connectDots
         play_again = 0
-        self.board.player = player
-        if (player == "Player 1"):
-            while (play_again != 1 and len(self.board.available_moves) > 0):
-                if (play_again == 2):
-                    if (self.board.completed > 1):
-                        print(player + ' completed '+ str(self.board.completed) + ' boxes. Please play another move.')
-                    else:
-                        print(player + ' completed ' + str(self.board.completed) + ' box. Please player another move.')
-                while True:
-                    try:        
-                        move = self.takeInput(player + ' enter your move: ')
+        while (play_again != 1 and len(self.board.available_moves) > 0):
+            if (play_again == 2):
+                print(player + ' completed '+ str(self.board.completed) + ' boxes. Please play another move.')
+            while True:
+                try:        
+                    move = self.takeInput(player + ' enter your move: ')
+                    moves = move.split(' ')
+                    while (len(moves) != 2):
+                        move = self.takeInput('Please enter moves according to the form \'(x1,y1) (x2,y2)\': ')
                         moves = move.split(' ')
-                        while (len(moves) != 2):
-                            move = self.takeInput('Please enter moves according to the form \'(x1,y1) (x2,y2)\': ')
-                            moves = move.split(' ')
-                        l = (int(moves[0][1]), int(moves[0][3]))
-                        k = (int(moves[1][1]), int(moves[1][3]))
-                        break
-                    except ValueError:
-                        print("Error. Please try again.")
+                    l = (int(moves[0][1]), int(moves[0][3]))
+                    k = (int(moves[1][1]), int(moves[1][3]))
+                    break
+                except ValueError:
+                    print("Error. Please try again.")
 
-                play_again = self.board.connectDots((l, k), player)
-                self.board.displayBoard()
+            play_again = self.board.connectDots((l, k), player)
+            self.board.displayBoard()
 
-        else: # AI Turn
-            algorithm = Minimax()
-            while (play_again != 1 and len(self.board.available_moves) > 0):
-                if (play_again == 2):
-                    if (self.board.completed > 1):
-                        print('The AI completed '+ str(self.board.completed) + ' boxes. They play another move.')
-                    else:
-                        print('The AI completed ' + str(self.board.completed) + ' box. They play another move.')
-                
-                # For Random Move
-                #move = self.randomMove() 
+    def computerTurn(self):
+        algorithm = Minimax()
+        play_again = 0
+        while (play_again != 1 and len(self.board.available_moves) > 0):
+            if (play_again == 2):
+                print('The AI completed ' + str(self.board.completed) + ' boxes. They play another move.')
+            print('The AI is making a move...')
+            # For a Random Player
+            # move = self.randomMove()
 
-                # For Minimax Move
-                print('\nThe AI is playing.\n')
-                move = algorithm.getMove(self.board)
-                l = move[0]
-                k = move[1]
-                print('\nAI played at ' + str(move)[1:-1])
-                play_again = self.board.connectDots((l, k), player)
-                self.board.displayBoard()
+            # For a Minimax Player
+            move = algorithm.getMove(self.board)
+            l = move[0]
+            k = move[1]
+            print('The AI is playing ' + str(l) + ' ' + str(k) + '.')
+            play_again = self.board.connectDots((l,k), 'Player 2')
+            self.board.displayBoard()
 
     def randomMove(self):
         return random.choice(self.board.available_moves)
