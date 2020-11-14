@@ -5,11 +5,8 @@ class Minimax:
 
     def miniMax(self, board, depth, alpha=-1000, beta=1000):
         board.generateChildren()
-        if ((board.depth >= depth) or len(board.children) == 0):
+        if ((board.depth >= depth) or (len(board.children) == 0)):
             return board.game_score
-
-        # Do we want to allow option for player to select who goes first?
-        # Max = whoever goes first?
 
         # IF IT'S MAX TURN
         if (board.player == "Player 1"):
@@ -24,7 +21,7 @@ class Minimax:
                 if alpha >= beta:
                     break
                     #return alpha #Break early
-            board.game_score = best_score
+            board.value = best_score
             return best_score
             
         # IF IT'S MIN TURN
@@ -40,18 +37,17 @@ class Minimax:
                 if beta <= alpha:
                     break
                     #return beta #Break early
-            board.game_score = best_score
+            board.value = best_score
             return best_score
 
-    def getMove(self, board, depth=15):
+    def getMove(self, board, depth=10):
         board = copy.deepcopy(board)
 
         # GENERATE SCORES
         best_score = self.miniMax(board, depth, -1000, 1000)
-        print('Best score: ' + str(best_score))
         # Iterate through children of current state to find best best move
         for child in board.children:
-            if child.game_score == best_score:
+            if child.value == best_score:
                 move = child.move
                 return move
             # If there was no best move, set to last child's value

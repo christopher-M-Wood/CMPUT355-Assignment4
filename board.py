@@ -30,6 +30,7 @@ class Board:
         self.depth = 0 # Starting depth
         self.moves_remaining = len(self.available_moves)
         self.children = [] # Children states of the board
+        self.value = 0 # Value from miniMax algorithm
 
     # Create a queue of all available moves/lines that can be played on this board, given a particular number of rows and columns
     def generateMoves(self, r, c):
