@@ -19,8 +19,8 @@ class Minimax:
                     alpha = best_score
                 # Check for pruning
                 if alpha >= beta:
-                    break
-                    #return alpha #Break early
+                    #break
+                    return alpha #Break early
             board.value = best_score
             return best_score
             
@@ -35,12 +35,12 @@ class Minimax:
                     beta = best_score
                 # Check for pruning
                 if beta <= alpha:
-                    break
-                    #return beta #Break early
+                    #break
+                    return beta #Break early
             board.value = best_score
             return best_score
 
-    def getMove(self, board, depth=10):
+    def getMove(self, board, depth=5):
         board = copy.deepcopy(board)
 
         # GENERATE SCORES
