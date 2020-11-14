@@ -5,7 +5,7 @@ class Minimax:
 
     def miniMax(self, board, depth, alpha=-1000, beta=1000):
         board.generateChildren()
-        if ((board.depth >= depth) or (len(board.children) == 0)):
+        if ((board.moves_remaining == 0) or (board.depth >= depth)):
             return board.game_score
 
         # IF IT'S MAX TURN
