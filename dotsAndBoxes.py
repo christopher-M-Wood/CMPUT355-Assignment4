@@ -31,7 +31,7 @@ class DotsAndBoxes:
                 start = time.time()
                 self.computerTurn()
                 end = time.time()
-                print("AI took " + end - start + " seconds!")
+                print("AI took " + str(end - start) + " seconds!")
 
             self.getWinner()
             temp = self.takeInput('Would you like to play again? (Y/N): ')
