@@ -7,6 +7,7 @@ import board
 import box
 from miniMax import Minimax
 import random
+import time
 
 
 info = 'CONTROLS\n--------\nh,help\t : Prints this help guide\ni,input\t : Prints the proper format for inputing a move\nm,moves\t : Prints the available moves\nq,quit\t : Prints the current winner and then exits the program\ns,score\t : Prints the current score'
@@ -27,7 +28,10 @@ class DotsAndBoxes:
                 # self.playerTurn("Player 2")
                 
                 # AI Player
+                start = time.time()
                 self.computerTurn()
+                end = time.time()
+                print("AI took " + end - start + " seconds!")
 
             self.getWinner()
             temp = self.takeInput('Would you like to play again? (Y/N): ')
