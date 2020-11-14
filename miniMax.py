@@ -1,4 +1,6 @@
 # Search algorithm for Dots and Boxes
+import board
+
 import copy
 
 class Minimax:
@@ -7,7 +9,6 @@ class Minimax:
         board.generateChildren()
         if ((board.moves_remaining == 0) or (board.depth >= depth)):
             return board.game_score
-
         # IF IT'S MAX TURN
         if (board.player == "Player 1"):
             best_score = -1000 # WC for MAX 
@@ -41,15 +42,15 @@ class Minimax:
             return best_score
 
     def getMove(self, board, depth=5):
-        board = copy.deepcopy(board)
+        board_copy = copy.deepcopy(board)
 
         # GENERATE SCORES
-        best_score = self.miniMax(board, depth, -1000, 1000)
+        best_score = self.miniMax(board_copy, depth, -1000, 1000)
         # Iterate through children of current state to find best best move
-        for child in board.children:
+        best = None
+        for child in board_copy.children:
             if child.value == best_score:
-                move = child.move
-                return move
+                return child.move
             # If there was no best move, set to last child's value
-            move = child.move 
-        return move
+            best = child
+        return best.move

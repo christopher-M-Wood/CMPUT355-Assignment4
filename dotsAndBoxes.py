@@ -76,7 +76,7 @@ class DotsAndBoxes:
                     break
                 except ValueError:
                     print("Error. Please try again.")
-
+            self.board.player = 'Player 1'
             play_again = self.board.connectDots((l, k), player)
             self.board.displayBoard()
 
@@ -91,6 +91,7 @@ class DotsAndBoxes:
             # move = self.randomMove()
 
             # For a Minimax Player
+            self.board.player = 'Player 2'
             move = algorithm.getMove(self.board)
             l = move[0]
             k = move[1]
