@@ -10,7 +10,7 @@ class Minimax:
         if ((board.moves_remaining == 0) or (board.depth >= depth)):
             return board.game_score
         # IF IT'S MAX TURN
-        if (board.player == "Player 1"):
+        if (board.player == "Player 2"):
             best_score = -1000 # WC for MAX 
             for child in board.children:
                 result = self.miniMax(child, depth - 1, alpha, beta)
@@ -26,7 +26,7 @@ class Minimax:
             return best_score
             
         # IF IT'S MIN TURN
-        elif (board.player == "Player 2"):
+        elif (board.player == "Player 1"):
             best_score = 1000 # WC FOR MIN
             for child in board.children:
                 result = self.miniMax(child, depth - 1, alpha, beta)
