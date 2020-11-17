@@ -86,11 +86,13 @@ class DotsAndBoxes:
 
     def computerTurn(self):
         algorithm = Minimax()
+        self.board.mode = "AI"
         play_again = 0
         while (play_again != 1 and len(self.board.available_moves) > 0):
             if (play_again == 2):
                 print('The AI completed ' + str(self.board.completed) + ' boxes. They play another move.')
             print('The AI is making a move...')
+            
             # For a Random Player
             # move = self.randomMove()
 

@@ -41,7 +41,7 @@ class Minimax:
             board.value = best_score
             return best_score
 
-    def getMove(self, board, depth=5):
+    def getMove(self, board, depth=3):
         board_copy = copy.deepcopy(board)
 
         # GENERATE SCORES

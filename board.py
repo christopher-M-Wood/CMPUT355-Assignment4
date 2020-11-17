@@ -25,6 +25,7 @@ class Board:
         self.completed_moves = []
         self.possible_boxes = self.generateBoxes(self.row,self.col)
 
+        self.mode = None
         self.player = None # "Player 1" or "Player 2"
         self.move = None # Move that resulted in this state
         self.depth = 0 # Starting depth
@@ -91,7 +92,10 @@ class Board:
                     box_found = False
                     for box in self.possible_boxes:
                         if box.top_left[0] == j and box.top_left[1] == i and box.complete:
-                            cell_width += str(box.filled_by)
+                            if (self.mode == "AI"):
+                                cell_width = "  AI"
+                            else:
+                                cell_width += str(box.filled_by)
                             box_found = True
                     if box_found == False:
                         cell_width += " "
