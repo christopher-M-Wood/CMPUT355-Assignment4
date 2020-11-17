@@ -92,7 +92,7 @@ class Board:
                     box_found = False
                     for box in self.possible_boxes:
                         if box.top_left[0] == j and box.top_left[1] == i and box.complete:
-                            if (self.mode == "AI"):
+                            if (self.mode == "AI" and box.filled_by == 2):
                                 cell_width = "  AI"
                             else:
                                 cell_width += str(box.filled_by)
