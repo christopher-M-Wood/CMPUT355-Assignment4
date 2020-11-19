@@ -208,3 +208,4 @@ class Board:
 
             # Add this updated board state to current state's children states
             self.children.append(child)
+    

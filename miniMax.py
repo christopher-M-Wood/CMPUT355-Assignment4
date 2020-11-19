@@ -7,8 +7,9 @@ class Minimax:
 
     def miniMax(self, board, depth, alpha=-1000, beta=1000):
         board.generateChildren()
-        if ((board.moves_remaining == 0) or (board.depth >= depth)):
+        if ((board.moves_remaining == 0) or depth <= 0):
             return board.game_score
+
         # IF IT'S MAX TURN
         if (board.player == "Player 2"):
             best_score = -1000 # WC for MAX 
