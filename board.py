@@ -33,6 +33,18 @@ class Board:
         self.children = [] # Children states of the board
         self.value = None # Value from miniMax algorithm
 
+    # Compare self to another board
+    # If the two boards have the same number of boxes and for each box, the state of all lines match, they are equal, else not equal
+    def equals(self, comp):
+        if (len(self.box_list) != len(comp.box_list)):
+            return False
+        for i in range(len(self.box_list)):
+            a = self.box_list[i]
+            b = comp.box_list[i]
+            if not (a.top_done == b.top_done and a.left_done == b.left_done and a.right_done == b.right_done and a.bottom_done == b.bottom_done):
+                return False
+        return True
+    
     # Create a queue of all available moves/lines that can be played on this board, given a particular number of rows and columns
     def generateMoves(self, r, c):
         available = []

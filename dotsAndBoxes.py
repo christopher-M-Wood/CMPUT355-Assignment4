@@ -3,12 +3,12 @@
 #   self.depth = depth of search
 
 import sys
-import board
-import box
-from miniMax import Minimax
 import random
 import time
 
+import board
+import box
+import miniMax
 
 info = 'CONTROLS\n--------\nh,help\t : Prints this help guide\ni,input\t : Prints the proper format for inputing a move\nm,moves\t : Prints the available moves\nq,quit\t : Prints the current winner and then exits the program\ns,score\t : Prints the current score'
 input_format = 'Moves are to be formatted as point pairs such that \'(x1,y1) (x2,y2)\''
@@ -17,6 +17,7 @@ class DotsAndBoxes:
     # Initializer
     def __init__(self,x,y):
         self.board = board.Board(x+1,y+1)
+        self.algorithm = miniMax.Minimax()
 
     # The game loop
     def play(self):
@@ -29,7 +30,7 @@ class DotsAndBoxes:
                 
                 # AI Player
                 start = time.time()
-                self.computerTurn()
+                self.computerTurn(self.algorithm)
                 end = time.time()
                 print("AI took " + str(end - start) + " seconds!")
 
@@ -84,8 +85,7 @@ class DotsAndBoxes:
             play_again = self.board.connectDots((l, k), player)
             self.board.displayBoard()
 
-    def computerTurn(self):
-        algorithm = Minimax()
+    def computerTurn(self, algorithm):
         self.board.mode = "AI"
         play_again = 0
         while (play_again != 1 and len(self.board.available_moves) > 0):

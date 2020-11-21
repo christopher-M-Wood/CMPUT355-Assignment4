@@ -112,10 +112,17 @@ class Minimax:
 
     def miniMax(self, board, depth, alpha=-1000, beta=1000):
         board.generateChildren()
+<<<<<<< Updated upstream
+        if ((board.moves_remaining == 0) or depth <= 0):
+            return board.game_score
+
+=======
         if ((board.moves_remaining == 0) or (board.depth >= depth)):
             self.scores.update({board: board.game_score})
             return board.game_score
+        
         out = self.getScore(board)
+>>>>>>> Stashed changes
         # IF IT'S MAX TURN
         if (board.player == "Player 2"):
             if (out == None):
