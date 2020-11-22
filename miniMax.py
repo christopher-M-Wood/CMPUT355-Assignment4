@@ -5,8 +5,6 @@ import copy
 import random
 
 class Minimax:
-
-    Isos = []
     scores = {}
 
     # Swaps the lines of a box
@@ -77,6 +75,8 @@ class Minimax:
         return board
             
     def genIsos(self, o_board):
+        if not (o_board.dimensions[0] == 3 and o_board.dimensions[1] == 3):
+            return None
         r_isos = []
         # Basic boxes (0,1,2,3,4,5,6,7,8)
         r_isos.append(o_board)
@@ -98,24 +98,32 @@ class Minimax:
 
     def getScore(self, board):
         if (len(self.scores) < 1):
-            return None
+            return (None,None)
+        isos = self.genIsos(board)
         for key in self.scores:
-            if (board.dimensions[0] == 3 and board.dimensions[1] == 3):
-                isos = self.genIsos(board)
+            if not (isos == None):
                 for i in isos:
                     if (key.equals(i)):
-                        return self.scores[key]
+                        if (key.player == board.player):
+                            return (i,self.scores[key])
+                        else:
+                            return (None,None)
             else:
                 if (key.equals(board)):
-                    return self.scores[key]
-        return None
+                    if (key.player == board.player):
+                        return (board,self.scores[key])
+                    else:
+                        return (None,None)
+        return (None,None)
 
     def miniMax(self, board, depth, alpha=-1000, beta=1000):
         board.generateChildren()
         if ((board.moves_remaining == 0) or (board.depth >= depth)):
             self.scores.update({board: board.game_score})
             return board.game_score
-        out = self.getScore(board)
+        (b_iso, out) = self.getScore(board)
+        if (b_iso == None):
+            b_iso = board
         # IF IT'S MAX TURN
         if (board.player == "Player 2"):
             if (out == None):
@@ -130,10 +138,10 @@ class Minimax:
                 # Check for pruning
                 if alpha >= beta:
                     #break
-                    self.scores.update({board: alpha})
+                    self.scores.update({b_iso: alpha})
                     return alpha #Break early
             board.value = best_score
-            self.scores.update({board: best_score})
+            self.scores.update({b_iso: best_score})
             return best_score
             
         # IF IT'S MIN TURN
@@ -150,10 +158,10 @@ class Minimax:
                 # Check for pruning
                 if beta <= alpha:
                     #break
-                    self.scores.update({board: beta})
+                    self.scores.update({b_iso: beta})
                     return beta #Break early
             board.value = best_score
-            self.scores.update({board: best_score})
+            self.scores.update({b_iso: best_score})
             return best_score
 
     def getMove(self, board, depth=3):

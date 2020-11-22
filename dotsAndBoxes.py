@@ -17,7 +17,6 @@ class DotsAndBoxes:
     # Initializer
     def __init__(self,x,y):
         self.board = board.Board(x+1,y+1)
-        self.algorithm = miniMax.Minimax()
 
     # The game loop
     def play(self):
@@ -30,7 +29,7 @@ class DotsAndBoxes:
                 
                 # AI Player
                 start = time.time()
-                self.computerTurn(self.algorithm)
+                self.computerTurn(miniMax.Minimax())
                 end = time.time()
                 print("AI took " + str(end - start) + " seconds!")
 
