@@ -29,7 +29,7 @@ class DotsAndBoxes:
                 
                 # AI Player
                 start = time.time()
-                self.computerTurn(miniMax.Minimax())
+                self.computerTurn()
                 end = time.time()
                 print("AI took " + str(end - start) + " seconds!")
 
@@ -84,7 +84,7 @@ class DotsAndBoxes:
             play_again = self.board.connectDots((l, k), player)
             self.board.displayBoard()
 
-    def computerTurn(self, algorithm):
+    def computerTurn(self):
         self.board.mode = "AI"
         play_again = 0
         while (play_again != 1 and len(self.board.available_moves) > 0):
@@ -97,6 +97,7 @@ class DotsAndBoxes:
 
             # For a Minimax Player
             self.board.player = 'Player 2'
+            algorithm = miniMax.Minimax()
             move = algorithm.getMove(self.board)
             l = move[0]
             k = move[1]
