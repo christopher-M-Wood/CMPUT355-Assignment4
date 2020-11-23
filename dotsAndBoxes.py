@@ -15,8 +15,9 @@ input_format = 'Moves are to be formatted as point pairs such that \'(x1,y1) (x2
 
 class DotsAndBoxes:
     # Initializer
-    def __init__(self,x,y):
+    def __init__(self,x,y,depth):
         self.board = board.Board(x+1,y+1)
+        self.depth = depth
 
     # The game loop
     def play(self):
@@ -98,7 +99,7 @@ class DotsAndBoxes:
             # For a Minimax Player
             self.board.player = 'Player 2'
             algorithm = miniMax.Minimax()
-            move = algorithm.getMove(self.board)
+            move = algorithm.getMove(self.board, self.depth)
             l = move[0]
             k = move[1]
             print('The AI is playing ' + str(l) + ' ' + str(k) + '.')
@@ -126,12 +127,46 @@ class DotsAndBoxes:
         elif (player1 == player2):
             print("Tie! --> ","Player 1 Score:",player1,"Player 2 Score:",player2)
             
-
+#processes input for strength of AI            
+def takeDiffInput(inputString):
+    diffvalues = [1,2,3,4,5,6]    
+    out = False
+    while (out == False):
+        try:
+            val = int(input(inputString))
+            for i in diffvalues:
+                if val == i:
+                    return val
+            break
+        except ValueError:
+            return out
+    return out
+        
+        
 # Main running order of the code
 if __name__ == '__main__':
     if (len(sys.argv) < 3):
         print('Please call this file as \'python3 dotsAndBoxes.py [X] [Y]')
     else:
+        gametype = None
+        gametypevalues = [0,1,2]
+        #for i in range(1,24):
+            #depthvalues.append(i)
+        #while True:
+            #try:
+                #gametype = int(input("Welcome to Dots and Boxes!\n\nIn this game, you may place one line per turn. If you are the one to\ncomplete a box on the grid, you get a point and may move again.\nThat's all there is to it, really!\n\nEnter 1 if you would like to play against the AI.\nEnter 2 if you are playing against a friend.\nEnter 0 if you would like to see an AI vs. AI simulation."))
+                #q,quit         : Prints the current winner and then exits the program
+                #while (len(moves) != 2):
+                    #move = self.takeInput('Please enter moves according to the form \'(x1,y1) (x2,y2)\': ')
+                #break
+            #except ValueError:
+                #print("Error. Please try again.")
+        while True:    
+            depth = takeDiffInput("How difficult of an AI would you like to play against?\nPlease specify as a number from 1-6: ")
+            while depth == False:
+                depth = takeDiffInput("Please enter a number from 1-6: ")  
+            break            
         print(info)
-        dab = DotsAndBoxes(int(sys.argv[1]), int(sys.argv[2]))
+        dab = DotsAndBoxes(int(sys.argv[1]), int(sys.argv[2]), depth)
         dab.play()
+
