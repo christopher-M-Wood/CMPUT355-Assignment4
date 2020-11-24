@@ -25,7 +25,7 @@ class Board:
         self.completed_moves = []
         self.possible_boxes = self.generateBoxes(self.row,self.col)
 
-        self.mode = None
+        self.mode = None # "Human" or "AI"
         self.player = None # "Player 1" or "Player 2"
         self.move = None # Move that resulted in this state
         self.depth = 0 # Starting depth
@@ -69,7 +69,7 @@ class Board:
         return self.box_list
 
     # Prints a text representation of the current board state for the command line
-    def displayBoard(self):
+    def displayBoard(self, gametype):
         for i in range(0,self.dimensions[0]-1):
             horiz_row = ""
             for j in range(0,self.dimensions[1]):
@@ -104,16 +104,15 @@ class Board:
                     box_found = False
                     for box in self.possible_boxes:
                         if box.top_left[0] == j and box.top_left[1] == i and box.complete:
-                            if (self.mode == "AI" and box.filled_by == 2):
-                                cell_width = "| AI"
+                            if (gametype == 1 and box.filled_by[0] == 1):
+                                cell_width = "| AI" + "  "
                             else:
-                                cell_width += str(box.filled_by)
+                                cell_width += str(box.filled_by[1]) + "  "
                             box_found = True
                     if box_found == False:
-                        cell_width += " "
+                        cell_width += "   "
                 else:
-                    cell_width += " "
-                cell_width += "  "
+                    cell_width += "   "
                 box_marker_row += cell_width
             print(box_marker_row)
             print(vert_row)
@@ -181,13 +180,19 @@ class Board:
                             # Player 1 or Player 2
                             if player == "Player 1":
                                 self.score[0] += 1    #Increment score
-                                b.filled_by = 1       #Set who completed the box
-                                self.game_score += 1
+                                self.game_score += 1 
+                                if self.mode == "AI":
+                                    b.filled_by = (1,1)
+                                else:
+                                    b.filled_by = (0,1)
                                 break
                             elif player == "Player 2":
                                 self.score[1] += 1    #Increment score 
-                                b.filled_by = 2       #Set who completed the box
-                                self.game_score -=1
+                                self.game_score = 1
+                                if self.mode == "AI":
+                                    b.filled_by = (1,2)
+                                else:
+                                    b.filled_by = (0,2)
                                 break
             
         return box

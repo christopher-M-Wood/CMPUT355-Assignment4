@@ -10,7 +10,7 @@ class Box:
 
         # Tracking if box is complete and which player completed it
         self.complete  = False 
-        self.filled_by = None # Player 1 or Player 2
+        self.filled_by = None # tuple, first value is 0 for human and 1 for AI, second value is player
 
         # Tracks if a line is filled
         self.top_done    = False
