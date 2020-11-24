@@ -117,7 +117,7 @@ class Minimax:
     def miniMax(self, board, depth, alpha=-1000, beta=1000):
         #checking = self.pruneDescendants(board)
         board.generateChildren()
-        if ((board.moves_remaining == 0) or (depth <= 0)):
+        if ((board.moves_remaining == 0) or (depth <= board.depth)):
             if (board.game_score == None):
                 return 0
             else:
