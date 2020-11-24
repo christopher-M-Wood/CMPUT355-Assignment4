@@ -36,7 +36,7 @@ class Board:
     # Compare self to another board
     # If the two boards have the same number of boxes and for each box, the state of all lines match, they are equal, else not equal
     def equals(self, comp):
-        if (len(self.box_list) != len(comp.box_list)):
+        if not (len(self.box_list) == len(comp.box_list)):
             return False
         for i in range(len(self.box_list)):
             a = self.box_list[i]
@@ -204,11 +204,6 @@ class Board:
             child.available_moves = copy.deepcopy(self.available_moves)
             child.completed_moves = copy.deepcopy(self.completed_moves)
             child.possible_boxes = copy.deepcopy(self.possible_boxes)
-
-            if (self.player == "Player 1"):
-                child.player = "Player 2"
-            elif (self.player == "Player 2"):
-                child.player = "Player 1"
             
             child.move = move
             child.depth = self.depth + 1
@@ -216,7 +211,14 @@ class Board:
             child.children = []
 
             # Make the move on this child's board
-            child.connectDots(move, child.player)
+            box = child.connectDots(move, child.player)
+            
+            if (box == 2):
+                child.player = self.player
+            elif (self.player == "Player 1"):
+                child.player = "Player 2"
+            elif (self.player == "Player 2"):
+                child.player = "Player 1"
 
             # Add this updated board state to current state's children states
             self.children.append(child)

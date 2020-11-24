@@ -75,12 +75,9 @@ class Minimax:
         return board
             
     def genIsos(self, o_board):
-        if not (o_board.dimensions[0] == 4 and o_board.dimensions[1] == 4):
-            return None
-        else:
-            r_isos = []
-            # Basic boxes (0,1,2,3,4,5,6,7,8)
-            r_isos.append(o_board)
+        # Basic boxes (0,1,2,3,4,5,6,7,8)
+        r_isos = [o_board]
+        if (o_board.dimensions[0] == 4 and o_board.dimensions[1] == 4):
             # Mirrored about the horizontal axis (6,7,8,3,4,5,0,1,2)
             r_isos.append(self.mirror(o_board))
             # Mirrored about the vertical axis (2,1,0,5,4,3,8,7,6)
@@ -95,41 +92,35 @@ class Minimax:
             r_isos.append(self.mirror(self.mirror(self.mirror(o_board), 1), 2))
             # Mirrored about the horizontal axis and then about the line y=-x (6,3,0,7,4,1,8,5,2)
             r_isos.append(self.mirror(self.mirror(self.mirror(o_board), 2)))
-            return r_isos
+        return r_isos
 
     def pruneDescendants(self, board):
         output = []
         board.generateChildren()
-        if (len(self.descendants) == 0):
-            return board.children
-        for child in board.children:
-            c_isos = self.genIsos(child)
-            e = False
-            for exist in self.descendants:
-                if (c_isos == None):
-                    if (child.equals(exist)):
-                        e = True
-                        break
-                else:
-                    for c in c_isos:
-                        if (c.equals(exist)):
-                            e = True
-                            break
-                    if (e == True):
-                        break
-            if (e == False):
-                output.append(child)
-                self.descendants.append(child)
-        return output
+        return board.children
+        #for child in board.children:
+        #    e = False
+        #    if (len(self.descendants) > 0):
+        #        c_isos = self.genIsos(child)
+        #        for exist in self.descendants:
+        #            for c in c_isos:
+        #                if (c.equals(exist)):
+        #                    e = True
+        #                    break
+        #            if (e == True):
+        #                break
+        #    if (e == False):
+        #        output.append(child)
+        #        self.descendants.append(child)
+        #return output
 
     def miniMax(self, board, depth, alpha=-1000, beta=1000):
-        if ((board.moves_remaining == 0) or (board.depth >= depth)):
-            board.value = board.game_score
+        if ((board.moves_remaining == 0) or (depth <= 0)):
             return board.game_score
         checking = self.pruneDescendants(board)
         # IF IT'S MAX TURN
         if (board.player == "Player 2"):
-            best_score = alpha # WC for MAX 
+            best_score = -1000 # WC for MAX 
             for child in checking:
                 result = self.miniMax(child, depth-1, alpha, beta)
                 if (result > best_score):
@@ -139,14 +130,13 @@ class Minimax:
                 # Check for pruning
                 if alpha >= beta:
                     #break
-                    board.value = alpha
                     return alpha #Break early
             board.value = best_score
             return best_score
             
         # IF IT'S MIN TURN
         elif (board.player == "Player 1"):
-            best_score = beta # WC FOR MIN
+            best_score = 1000 # WC FOR MIN
             for child in checking:
                 result = self.miniMax(child, depth-1, alpha, beta)
                 if (result < best_score):
@@ -156,7 +146,6 @@ class Minimax:
                 # Check for pruning
                 if beta <= alpha:
                     #break
-                    board.value = beta
                     return beta #Break early
             board.value = best_score
             return best_score
@@ -166,6 +155,7 @@ class Minimax:
         # GENERATE SCORES
         best_score = self.miniMax(board_copy, depth, -1000, 1000)
         best = []
+        print(len(self.descendants))
         # Iterate through children of current state to find best best move
         for child in board_copy.children:
             if child.value == best_score:
