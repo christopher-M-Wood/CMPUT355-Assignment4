@@ -167,7 +167,13 @@ def takeMenuInput(inputString, inputType):
 # Main running order of the code
 if __name__ == '__main__':
     if (len(sys.argv) < 3):
-        print('Please call this file as \'python3 dotsAndBoxes.py [X] [Y]')
+        print('Please call this file as \'python3 dotsAndBoxes.py [X] [Y]\'')
+        exit()
+    try:
+        test1 = int(sys.argv[1])
+        test2 = int(sys.argv[2])
+    except:
+        print('Please call this file as \'python3 dotsAndBoxes.py [X] [Y]\'')
     else:
         depth = 2 #default AI difficulty
         turn = None #null value by default

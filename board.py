@@ -10,20 +10,20 @@ class Board:
     #   list of possible boxes
     
     # Initializer (takesnumber of rows and columns)
-    def __init__(self, rows, cols):
+    def __init__(self, x, y):
         # Convert string input to integer
-        self.row = int(rows)
-        self.col = int(cols)
+        self.col = int(x)
+        self.row = int(y)
 
         self.completed = 0
         self.box_list = []
         self.score = [0,0] # Format: [p1,p2]
         self.game_score = 0
-        self.dimensions = [self.row, self.col]
+        self.dimensions = [self.col, self.row]
         
-        self.available_moves = self.generateMoves(self.row,self.col)
+        self.available_moves = self.generateMoves(self.col,self.row)
         self.completed_moves = []
-        self.possible_boxes = self.generateBoxes(self.row,self.col)
+        self.possible_boxes = self.generateBoxes(self.col,self.row)
 
         self.mode = None # "Human" or "AI"
         self.player = None # "Player 1" or "Player 2"
@@ -46,13 +46,13 @@ class Board:
         return True
     
     # Create a queue of all available moves/lines that can be played on this board, given a particular number of rows and columns
-    def generateMoves(self, r, c):
+    def generateMoves(self, c, r):
         available = []
-        for i in range(0,r):
-            for j in range(0,c-1):
+        for i in range(0,c):
+            for j in range(0,r-1):
                 available.append(((i,j),(i, j+1)))
-        for i in range(0,r-1):
-            for j in range(0,c):
+        for i in range(0,c-1):
+            for j in range(0,r):
                 available.append(((i,j),(i+1, j)))
 
         return available
@@ -61,18 +61,18 @@ class Board:
         # TODO: Ian 
 
     # Creates a list of Box objects (from box.py)
-    def generateBoxes(self, rows, cols):
-        for i in range(rows-1):
-            for j in range(cols-1):
+    def generateBoxes(self, cols, rows):
+        for i in range(cols-1):
+            for j in range(rows-1):
                 a_box = box.Box(i,j)
                 self.box_list.append(a_box)
         return self.box_list
 
     # Prints a text representation of the current board state for the command line
     def displayBoard(self, gametype):
-        for i in range(0,self.dimensions[0]-1):
+        for i in range(0,self.dimensions[1]-1):
             horiz_row = ""
-            for j in range(0,self.dimensions[1]):
+            for j in range(0,self.dimensions[0]):
                 cell_width = "."
                 if ((j,i),(j+1,i)) in self.completed_moves or ((j+1,i),(j,i)) in self.completed_moves:
                 #note that for all these if statements, j and i are flipped because it has to print row by row
@@ -83,7 +83,7 @@ class Board:
                 horiz_row += cell_width
             print(horiz_row)
             vert_row = ""
-            for j in range(0,self.dimensions[1]):
+            for j in range(0,self.dimensions[0]):
                 cell_width = ""
                 if ((j,i),(j,i+1)) in self.completed_moves or ((j,i+1),(j,i)) in self.completed_moves:
                     cell_width += "|"
@@ -93,14 +93,14 @@ class Board:
                 vert_row += cell_width
             print(vert_row)
             box_marker_row = ""
-            for j in range(0,self.dimensions[1]):
+            for j in range(0,self.dimensions[0]):
                 cell_width = ""
                 if ((j,i),(j,i+1)) in self.completed_moves or ((j,i+1),(j,i)) in self.completed_moves:
                     cell_width += "|"
                 else:
                     cell_width += " "
                 cell_width += "  "
-                if j != self.dimensions[1]-1:
+                if j != self.dimensions[0]-1:
                     box_found = False
                     for box in self.possible_boxes:
                         if box.top_left[0] == j and box.top_left[1] == i and box.complete:
@@ -117,9 +117,9 @@ class Board:
             print(box_marker_row)
             print(vert_row)
         horiz_row = ""
-        for j in range(0,self.dimensions[1]):
+        for j in range(0,self.dimensions[0]):
             cell_width = "."
-            if ((j,self.dimensions[0]-1),(j+1,self.dimensions[0]-1)) in self.completed_moves or ((j+1,self.dimensions[0]-1),(j,self.dimensions[0]-1)) in self.completed_moves:
+            if ((j,self.dimensions[1]-1),(j+1,self.dimensions[1]-1)) in self.completed_moves or ((j+1,self.dimensions[1]-1),(j,self.dimensions[1]-1)) in self.completed_moves:
                 cell_width += "_____"
             else:
                 cell_width += "     "
