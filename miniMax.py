@@ -115,13 +115,18 @@ class Minimax:
         #return output
 
     def miniMax(self, board, depth, alpha=-1000, beta=1000):
+        #checking = self.pruneDescendants(board)
+        board.generateChildren()
         if ((board.moves_remaining == 0) or (depth <= 0)):
-            return board.game_score
-        checking = self.pruneDescendants(board)
+            if (board.game_score == None):
+                return 0
+            else:
+                return board.game_score
+
         # IF IT'S MAX TURN
         if (board.player == "Player 2"):
             best_score = -1000 # WC for MAX 
-            for child in checking:
+            for child in board.children:
                 result = self.miniMax(child, depth-1, alpha, beta)
                 if (result > best_score):
                     best_score = result # Found a better best move
@@ -137,7 +142,7 @@ class Minimax:
         # IF IT'S MIN TURN
         elif (board.player == "Player 1"):
             best_score = 1000 # WC FOR MIN
-            for child in checking:
+            for child in board.children:
                 result = self.miniMax(child, depth-1, alpha, beta)
                 if (result < best_score):
                     best_score = result # Opponent has found a better worse move
@@ -153,13 +158,15 @@ class Minimax:
     def getMove(self, board, depth):
         board_copy = copy.deepcopy(board)
         # GENERATE SCORES
-        best_score = self.miniMax(board_copy, depth, -1000, 1000)
+        score = self.miniMax(board_copy, depth, -1000, 1000)
         best = []
-        print(len(self.descendants))
+        print(score)
         # Iterate through children of current state to find best best move
         for child in board_copy.children:
-            if child.value == best_score:
+            print(child.value)
+            if child.value == score:
                 best.append(child.move)
+        print(best)
         if (len(best) > 1):
             return random.choice(best)
         elif (len(best) == 1):

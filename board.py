@@ -205,6 +205,11 @@ class Board:
             child.completed_moves = copy.deepcopy(self.completed_moves)
             child.possible_boxes = copy.deepcopy(self.possible_boxes)
             
+            if (self.player == "Player 1"):
+                child.player = "Player 2"
+            elif (self.player == "Player 2"):
+                child.player = "Player 1"
+
             child.move = move
             child.depth = self.depth + 1
             child.moves_remaining = len(child.available_moves)
@@ -215,10 +220,6 @@ class Board:
             
             if (box == 2):
                 child.player = self.player
-            elif (self.player == "Player 1"):
-                child.player = "Player 2"
-            elif (self.player == "Player 2"):
-                child.player = "Player 1"
 
             # Add this updated board state to current state's children states
             self.children.append(child)
