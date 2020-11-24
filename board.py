@@ -74,7 +74,7 @@ class Board:
             horiz_row = ""
             for j in range(0,self.dimensions[1]):
                 cell_width = "."
-                if ((j,i),(j+1,i)) in self.completed_moves or ((j+1,i),(j,i)) in self.completed_moves:
+                if ((j,i),(j+1,i)) in self.completed_moves:# or ((j+1,i),(j,i)) in self.completed_moves:
                 #note that for all these if statements, j and i are flipped because it has to print row by row
                 #but I wanted to preserve the (x,y) coordinate format
                     cell_width += "_____"
@@ -85,7 +85,7 @@ class Board:
             vert_row = ""
             for j in range(0,self.dimensions[1]):
                 cell_width = ""
-                if ((j,i),(j,i+1)) in self.completed_moves or ((j,i+1),(j,i)) in self.completed_moves:
+                if ((j,i),(j,i+1)) in self.completed_moves:# or ((j,i+1),(j,i)) in self.completed_moves:
                     cell_width += "|"
                 else:
                     cell_width += " "
@@ -95,7 +95,7 @@ class Board:
             box_marker_row = ""
             for j in range(0,self.dimensions[1]):
                 cell_width = ""
-                if ((j,i),(j,i+1)) in self.completed_moves or ((j,i+1),(j,i)) in self.completed_moves:
+                if ((j,i),(j,i+1)) in self.completed_moves:# or ((j,i+1),(j,i)) in self.completed_moves:
                     cell_width += "|"
                 else:
                     cell_width += " "
@@ -120,7 +120,7 @@ class Board:
         horiz_row = ""
         for j in range(0,self.dimensions[1]):
             cell_width = "."
-            if ((j,self.dimensions[0]-1),(j+1,self.dimensions[0]-1)) in self.completed_moves or ((j+1,self.dimensions[0]-1),(j,self.dimensions[0]-1)) in self.completed_moves:
+            if ((j,self.dimensions[0]-1),(j+1,self.dimensions[0]-1)) in self.completed_moves:# or ((j+1,self.dimensions[0]-1),(j,self.dimensions[0]-1)) in self.completed_moves:
                 cell_width += "_____"
             else:
                 cell_width += "     "
@@ -144,7 +144,7 @@ class Board:
             self.available_moves.remove((coordinates[1],coordinates[0]))
             self.completed_moves.append((coordinates[1],coordinates[0]))
             # Flip coordinates back to normal
-            coordinates = (coordinates[1],coordinates[0])
+            coordinates = (coordinates[0],coordinates[1])
         else: 
             print('Error. Coordinates not valid')
             return 0
