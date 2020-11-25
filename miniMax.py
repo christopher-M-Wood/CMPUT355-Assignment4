@@ -196,7 +196,7 @@ class Minimax:
         best = []
         # Iterate through children of current state to find best best move
         for child in board_copy.children:
-            if child.value == score:
+            if (child.value == score or (score == 0 and child.value == None)):
                 best.append(child.move)
         if (len(best) > 1):
             return random.choice(best)
