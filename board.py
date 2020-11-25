@@ -1,3 +1,79 @@
+"""
+    A class used to represent the board.
+
+    Attributes
+    -------
+    self.col, self.row: ints
+        Track the board's size (numbers of columns, rows)
+
+    self.completed: int
+        Tracks the number of completed/filled boxes
+
+    self.box_list: array
+        Holds all the completed Box objects for this board
+
+    self.score: array
+        Holds the current score as [p1,p2]
+
+    self.game_score: int
+        Holds the zero-sum sore for this board's state (decrements for min, increments for max player)
+
+    self.dimensions: array
+        Holds the dimensions as [columns, rows]
+    
+    self.available_moves: array
+        An array of all the lines the player could choose on the current board
+        
+    self.completed_moves: array
+        Stores all completed lines so far on the board
+
+    self.possible_boxes: array
+        Holds all the 'legal' possible boxes a player could complete
+
+    self.mode: str
+        Specifies which player's turn it is (AI, Player)
+
+    self.player: str
+        "Player 1" or "Player 2"
+
+    self.move: tuple
+        Tracks the move that resulted in this state (used in miniMax)
+
+    self.depth: int
+        Current depth this board state is at (used in miniMax)
+
+    self.moves_remaining: int
+        Tracks how many moves are left until a full board
+
+    self.children: array of Boards
+        Stores all possible next-moves from this current board (used in miniMax)
+
+    self.value: int
+        Stores the board's miniMax score (used in miniMax)
+
+    Methods
+    -------
+    equals(self, comp)
+        Compares a board to another
+    
+    generateMoves(self, c, r)
+        Creates a queue of all available moves/lines that can be played on this board
+
+    displayBoard(self, gametype)
+        Prints a text representation of the current board state for the command line
+    
+    connectDots(self, coordinates, player)
+        Check self.available_moves for the coordinates given in the parameters. 
+        Adds any successful moves to self.completed_moves.
+        Returns a trinary value to determine whose turn is next.
+    
+    checkBoxes(self, coordinates, player)
+        Checks the list of boxes to see if the coordinates for the newly-added line from connectDots() completes a box
+
+    generateChildren(self)
+        Generates all of a given board state's possible next-move states (children)
+"""
+
 import box
 import copy
 
@@ -56,9 +132,6 @@ class Board:
                 available.append(((i,j),(i+1, j)))
 
         return available
-        # Should store each line on the board as a set (tuple) of coordinates in a queue
-        # NOTE from Jared: I coded the text representation to use ((x,y),(x,y)), so a tuple of tuples
-        # TODO: Ian 
 
     # Creates a list of Box objects (from box.py)
     def generateBoxes(self, cols, rows):
@@ -74,9 +147,8 @@ class Board:
             horiz_row = ""
             for j in range(0,self.dimensions[0]):
                 cell_width = "."
+                # j, i are flipped so as to print row by row while preserving (x,y) coords format
                 if ((j,i),(j+1,i)) in self.completed_moves or ((j+1,i),(j,i)) in self.completed_moves:
-                #note that for all these if statements, j and i are flipped because it has to print row by row
-                #but I wanted to preserve the (x,y) coordinate format
                     cell_width += "_____"
                 else:
                     cell_width += "     "
@@ -92,6 +164,7 @@ class Board:
                 cell_width += "     "
                 vert_row += cell_width
             print(vert_row)
+            
             box_marker_row = ""
             for j in range(0,self.dimensions[0]):
                 cell_width = ""
@@ -116,6 +189,7 @@ class Board:
                 box_marker_row += cell_width
             print(box_marker_row)
             print(vert_row)
+        
         horiz_row = ""
         for j in range(0,self.dimensions[0]):
             cell_width = "."
@@ -128,22 +202,17 @@ class Board:
 
 
     # Check self.available_moves for the coordinates given in the parameters
-    # If the coordinates are in self.possible_moves then:
-    #   - Remove the coordinates from self.possible_moves
-    #   - Add the coordinates to self.completed_moves
-    #   - Check our list of boxes (call checkBoxes()) to determine if we have an completed boxes with this new line
-    #   - RETURN: 0-Not a valid move, 1-Valid move, 2-Completed a box (Chris)
-    def connectDots(self, coordinates, player):
-        # TODO: Ian
-      
+    # - Returns trinary value for determining next player to play
+    def connectDots(self, coordinates, player):     
         if coordinates in self.available_moves:
         	self.available_moves.remove(coordinates)
         	self.completed_moves.append((coordinates[0],coordinates[1]))
+        
+        # Checking for flipped (equivalent) coordinates
         elif ((coordinates[1],coordinates[0])) in self.available_moves:
             self.available_moves.remove((coordinates[1],coordinates[0]))
             self.completed_moves.append((coordinates[1],coordinates[0]))
-            # Flip coordinates back to normal
-            coordinates = (coordinates[1],coordinates[0])
+            coordinates = (coordinates[1],coordinates[0]) # Flip coords back
         else: 
             print('Error. Coordinates not valid')
             return 0
@@ -154,49 +223,41 @@ class Board:
             return 1
 
     # Checks the list of boxes to see if the coordinates for the newly-added line from connectDots() completes a box
-    # Increment score for player who completed the box
-    # Change self.owner in Box object (from box.py) to player's identity
-    # Return True if box is completed
+    # - Return True if box is completed
     def checkBoxes(self, coordinates, player):
-        # TODO: Victor
-        
-        #By default
         box = False
         self.completed = 0
 
         # For box in box_list
         for b in self.box_list:
-            # For each line of the box four edges
             for line in b.lines:
                 # Check if coordinates match an edge
                 if coordinates == line:
-                    b.connect(coordinates) #Call connect() function in box.py
-                    if b.complete == True: #Check if box is completed after the call
-                        
+                    b.connect(coordinates)
+                    if b.complete == True:
                         self.completed += 1
+                        box = True
 
-                        box = True         #Set default to True
                         if b.filled_by == None:
-                            # Player 1 or Player 2
                             if player == "Player 1":
-                                self.score[0] += 1    #Increment score
-                                self.game_score += 1 
+                                self.score[0] += 1
+                                self.game_score += 1 # For minimax
                                 if self.mode == "AI":
                                     b.filled_by = (1,1)
                                 else:
                                     b.filled_by = (0,1)
                                 break
                             elif player == "Player 2":
-                                self.score[1] += 1    #Increment score 
-                                self.game_score = 1
+                                self.score[1] += 1 
+                                self.game_score = 1  # For minimax
                                 if self.mode == "AI":
                                     b.filled_by = (1,2)
                                 else:
                                     b.filled_by = (0,2)
-                                break
-            
+                                break 
         return box
 
+    # Generates all possible descendant states for a given board
     def generateChildren(self):
         for move in self.available_moves:
             # Create board object for child
@@ -223,6 +284,7 @@ class Board:
             # Make the move on this child's board
             box = child.connectDots(move, child.player)
             
+            # Handle if this is a repeated turn for a player
             if (box == 2):
                 child.player = self.player
 

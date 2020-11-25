@@ -1,6 +1,44 @@
-# Attributes
-#   self.board = Board(x,y) from board.py
-#   self.depth = depth of search
+"""
+    A class used to handle the game-play for Dots and Boxes
+    
+    Attributes
+    -------
+    self.board: Board 
+        A Board object with specified dimensions
+
+    self.depth: int
+        Specifies how deeply to search the game-tree, as chosen by the player
+
+    self.gametype: int
+        Specifies how to play (0 = P v AI, 1 = P v P, 2 = AI v AI)
+
+    self.turn: int
+        Tracks which player is playing on the current state.
+
+    Methods
+    -------
+    play(self):
+        The main game loop.
+
+    takeInput(self, inputString)
+        Handles the user's help menu selection and prints appropriately
+    
+    playerTurn(self, player)
+        Handles game-play when it is the player's turn 
+    
+    computerTurn(self, player)
+        Handles game-play when it is the computer's (AI) turn
+    
+    randomMove(self)
+        Returns a random move from all available moves
+
+    getWinner(self)
+        Determines winner based on score and prints a message
+
+    takeMenuInput(inputString, inputType)
+        Handles given user input
+
+"""
 
 import sys
 import random
@@ -26,6 +64,7 @@ class DotsAndBoxes:
         while True:
             self.board.displayBoard(gametype)
             while (len(self.board.available_moves) > 0):
+                # gametype 0 is AI v AI; gametype 1 is P v AI; gametype 2 is P v P
                 if self.gametype == 0 or self.turn == 2:
                     start = time.time()
                     self.computerTurn("Player 1") # AI P1
@@ -36,10 +75,10 @@ class DotsAndBoxes:
             
                 if (len(self.board.available_moves) > 0):
                     if self.gametype == 2 or self.turn == 2:
-                        self.playerTurn("Player 2") # human P2
+                        self.playerTurn("Player 2") # Human is P2
                     else:
                         start = time.time()
-                        self.computerTurn("Player 2") # AI P2
+                        self.computerTurn("Player 2") # AI is P2
                         end = time.time()
                         print("Player 2 (AI) took " + str(end - start) + " seconds!\n")
 
@@ -50,6 +89,7 @@ class DotsAndBoxes:
             else:
                 break
 
+    # Controls input related to the Help menu
     def takeInput(self, inputString):
         out = ''
         while (out == ''):
@@ -71,17 +111,20 @@ class DotsAndBoxes:
                 out = val
         return out
 
-    # Takes a player turn
+    # Handles a player turn
     def playerTurn(self, player):
         # Play again is a trinary value (0,1,2) based on the output key from board.py connectDots
         self.board.mode = "Human"
         play_again = 0
+
         while (play_again != 1 and len(self.board.available_moves) > 0):
             if (play_again == 2):
-                if self.board.completed == 2:
+                if self.board.completed == 2: # Player has another turn
                     print(player + ' completed 2 boxes. Please play another move.')
                 else:
                     print(player + ' completed a box. Please play another move.')
+           
+            # Input handling
             while True:
                 try:        
                     move = self.takeInput(player + ' enter your move: ')
@@ -94,34 +137,48 @@ class DotsAndBoxes:
                     break
                 except ValueError:
                     print("Error. Please try again.")
+
+            # Get the player's move
             self.board.player = player
             play_again = self.board.connectDots((l, k), player)
+
             self.board.displayBoard(gametype)
 
+    # Handles an AI turn
     def computerTurn(self, player):
+        # Play again is a trinary value (0,1,2) based on the output key from board.py connectDots
         self.board.mode = "AI"
         play_again = 0
+
         while (play_again != 1 and len(self.board.available_moves) > 0):
-            if (play_again == 2):
+            if (play_again == 2): # Player has another turn
                 if self.board.completed == 2:
                     print(player + ' (AI) completed 2 boxes. They play another move.')
                 else:
                     print(player + ' (AI) completed a box. They play another move.')
             print("\n"+player+' (AI) is making a move...')
-            
+
+            # Get the player's move
             move = None 
             self.board.player = player
+            # For a Random Player
             if self.depth == 0:
-                move = self.randomMove() # For a Random Player
-            else: # For a Minimax Player
+                move = self.randomMove() 
+            # For a Minimax Player
+            else:
                 algorithm = miniMax.Minimax()
                 move = algorithm.getMove(self.board, self.depth, player)
+
+            # Printing the current score
             l = move[0]
             k = move[1]
             print(player+ ' (AI) is playing ' + str(l) + ' ' + str(k) + '.')
+
             play_again = self.board.connectDots((l,k), player)
+
             self.board.displayBoard(gametype)
 
+    # Returns a random move from all available choices
     def randomMove(self):
         return random.choice(self.board.available_moves)
             
@@ -142,15 +199,18 @@ class DotsAndBoxes:
         # Player 1 score = Player 2 score
         elif (player1 == player2):
             print("Tie!\n\nPlayer 1 Score:",player1,"\nPlayer 2 Score:",player2,"\n")
-            
+
 #processes various input for starting menu          
 def takeMenuInput(inputString, inputType): 
     min_range = 0 #gametype
     max_range = 3
+
     if inputType == "diff":
         max_range = 6
+
     elif inputType == "turn":
         min_range = 1
+
     out = "invalid"
     while (out == "invalid"):
         try:
@@ -175,8 +235,8 @@ if __name__ == '__main__':
     except:
         print('Please call this file as \'python3 dotsAndBoxes.py [X] [Y]\'')
     else:
-        depth = 4 #sim AI difficulty
-        turn = None #null value by default
+        depth = 4 # sim AI difficulty
+        turn = None # null value by default
         while True:
             gametype = takeMenuInput("\nWelcome to Dots and Boxes!\n\nIn this game, you may place one line on your turn. If you are the one to\ncomplete a box on the grid, you get a point and may move again.\nThat's all there is to it, really!\n\nEnter 1 if you would like to play against the AI.\nEnter 2 if you are playing against a friend.\nEnter 0 if you would like to see an AI vs. AI simulation.\n", "gametype")
             while gametype == "invalid":

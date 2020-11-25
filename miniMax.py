@@ -1,6 +1,30 @@
-# Search algorithm for Dots and Boxes
-import board
+"""
+    A class used to represent the search algorithm for Dots and Boxes
 
+    Methods
+    -------
+    swapSides(self, box, swap_type=0)
+        Description
+
+    mirror(self, board, axis=0)
+        Description
+    
+    genIsos(self, o_board)
+        Description
+    
+    pruneDescendants(self, board)
+        Description
+    
+    miniMax(self, board, depth, turn, alpha=-1000, beta=1000)
+        A minimax-function for the game "Dots and Boxes". Recursive.
+
+    getMove(self, board, depth, turn)
+        Helper function, calls the miniMax() function and returns the best move
+        from all of a given state's descendants. 
+
+    """
+
+import board
 import copy
 import random
 
@@ -114,6 +138,7 @@ class Minimax:
         #        self.descendants.append(child)
         #return output
 
+    # Computes and returns the miniMax score for the given turn. 
     def miniMax(self, board, depth, turn, alpha=-1000, beta=1000):
         maxTurn = "Player 2"
         minTurn = "Player 1"
@@ -128,7 +153,7 @@ class Minimax:
             else:
                 return board.game_score
 
-        # IF IT'S MAX TURN
+        # COMPUTE SCORE FOR MAX'S TURN
         if (board.player == maxTurn):
             best_score = -1000 # WC for MAX 
             for child in board.children:
@@ -144,7 +169,7 @@ class Minimax:
             board.value = best_score
             return best_score
             
-        # IF IT'S MIN TURN
+       # COMPUTE SCORE FOR MAX'S TURN
         elif (board.player == minTurn):
             best_score = 1000 # WC FOR MIN
             for child in board.children:
@@ -160,6 +185,10 @@ class Minimax:
             board.value = best_score
             return best_score
 
+    # Helper function returns the result from miniMax() on a given state.
+    # It iterates through a state's possible children states, and returns
+    # the best possible score for the given turn.
+    # Returns the appropriate move based on the score.
     def getMove(self, board, depth, turn):
         board_copy = copy.deepcopy(board)
         # GENERATE SCORES
