@@ -39,6 +39,22 @@ For games played against the AI, the player may additionally select the game's d
 
 The in-game interface allows for the user to access a help-menu with the above options. The player enters their move as two tuples, a coordinate for each of the dots they want to connect with a line.
 
+## Data
+
+| Depth | Depth     |              1 |                  2 |                     3 |                       4 |                          5 |
+| :---: | --------- | -------------: | -----------------: | --------------------: | ----------------------: | -------------------------: |
+|  2x2  | Seconds   |       0.100357 |           0.209773 |              0.935980 |                2.175184 |                   8.914355 |
+|       | No. Nodes |    11*10 = 110 |      11*10*9 = 990 |     11*10*9*8 = 7,920 |    11*10*9*8*7 = 55,440 |    11*10*9*8*7*6 = 332,640 |
+|       |           |                |                    |                       |                         |                            |
+|  3x3  | Seconds   |       0.836551 |           0.785330 |             18.826792 |               52.928475 |                 495.647413 |
+|       | No. Nodes |    23*22 = 506 |  23*22*21 = 10,626 | 23*22*21*20 = 212,520 | 23*22*21*20*19 =  4.0e6 |  23*22*21*20*19*18 = 7.2e7 |
+|       |           |                |                    |                       |                         |                            |
+|  4x4  | Seconds   |       4.484663 |          12.049024 |            169.886210 |              514.022982 |                     ------ |
+|       | No. Nodes | 39*38 =  1,482 |  39*38*37 = 54,834 |   39*38*37*36 = 1.9e6 |  39*38*37*36*35 = 6.9e7 |  39*38*37*36*35*34 = 2.3e9 |
+|       |           |                |                    |                       |                         |                            |
+|  5x5  | Seconds   |      15.397095 |          45.495085 |            953.262535 |                  ------ |                     ------ |
+|       | No. Nodes |  59*58 = 3,422 | 59*58*57 = 195,054 |   59*58*57*56 = 1.1e7 |  59*58*57*56*55 = 6.0e8 | 59*58*57*56*55*54 = 3.2e10 |
+
 ## Sources
 
 The following were referenced at different points of our assignment's development:
