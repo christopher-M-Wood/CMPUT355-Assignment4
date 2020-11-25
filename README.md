@@ -33,7 +33,7 @@ For games played against the AI, the player may additionally select the game's d
 
 **In-Game Interface:**
 
-<img src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/RMimg3.png" alt="RMimg3" style="zoom:67%;" />
+<img src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/RMimg3.png" alt="RMimg3" style="zoom:50%;" />
 
 The in-game interface allows for the user to access a help-menu with the above options. The player enters their move as two tuples, a coordinate for each of the dots they want to connect with a line.
 
