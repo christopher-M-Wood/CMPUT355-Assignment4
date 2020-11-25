@@ -235,14 +235,20 @@ if __name__ == '__main__':
     except:
         print('Please call this file as \'python3 dotsAndBoxes.py [X] [Y]\'')
     else:
-        depth = 4 # sim AI difficulty
-        turn = None # null value by default
+        depth = 4 # Default sim AI difficulty
+        turn = None # Null value by default
         while True:
             gametype = takeMenuInput("\nWelcome to Dots and Boxes!\n\nIn this game, you may place one line on your turn. If you are the one to\ncomplete a box on the grid, you get a point and may move again.\nThat's all there is to it, really!\n\nEnter 1 if you would like to play against the AI.\nEnter 2 if you are playing against a friend.\nEnter 0 if you would like to see an AI vs. AI simulation.\n", "gametype")
             while gametype == "invalid":
                 gametype = takeMenuInput('Please enter a number from 0-2: ', "gametype")
             break
-        if gametype == 1:
+        if gametype == 0: # AI simulation
+            while True:    
+                depth = takeMenuInput("\nWhat difficulty would you like the AI to play at?\nPlease specify as a number from 0-5: ", "diff")
+                while depth == "invalid":
+                    depth = takeMenuInput("Please enter a number from 0-5: ", "diff") 
+                break            
+        if gametype == 1: # Player versus AI
             while True:    
                 depth = takeMenuInput("\nHow difficult of an AI would you like to play against?\nPlease specify as a number from 0-5: ", "diff")
                 while depth == "invalid":
