@@ -21,7 +21,7 @@ This is a terminal-based game. To begin, the user should input: ***python3 dotsA
 
 The user can select from three game-play options: Player vs. AI, Player vs. Player, and AI vs. AI
 
-<img src="/Users/giselearevalo/Documents/GitHub/CMPUT355-Assignment4/RMimg1.png" alt="RMimg1" style="zoom:67%;" />
+<img src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/RMimg1.png" alt="RMimg1" style="zoom:67%;" />
 
 
 
