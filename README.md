@@ -1,7 +1,3 @@
-
-
-[TOC]
-
 # Dots and Bots
 
 A player for Dots and Boxes created for Assignment 4 of CMPUT 355, Fall 2020. 
