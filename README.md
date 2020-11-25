@@ -17,11 +17,13 @@ This program includes four files:
 
 This is a terminal-based game. To begin, the user should input: ***python3 dotsAndBoxes.py 3 3*** into their terminal. The program works with grids of all sizes, although we began with 3x3 in mind, and larger grids result in increasingly slower 'moves' by the AI as it attempts to search larger game trees. The AI is implemented using the Mini Max algorithm with Alpha-Beta pruning. Additional functions for future versions have been included, although they have not yet been implemented; these include functions for recognizing isomorphisms and for using transpositions. We have left these for future iterations of our game.
 
-**Sample Initial Menu:**
+#### **Sample Initial Menu:**
 
 The user can select from three game-play options: Player vs. AI, Player vs. Player, and AI vs. AI
 
 <img src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/RMimg1.png" alt="RMimg1" style="zoom:50%;" />
+
+
 
 
 
@@ -31,8 +33,7 @@ For games played against the AI, the player may additionally select the game's d
 
 
 
-
-**In-Game Interface:**
+#### **In-Game Interface:**
 
 <img src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/RMimg3.png" alt="RMimg3" style="zoom:50%;"/>
 
