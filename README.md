@@ -21,15 +21,19 @@ This is a terminal-based game. To begin, the user should input: ***python3 dotsA
 
 The user can select from three game-play options: Player vs. AI, Player vs. Player, and AI vs. AI
 
-<div style="text-align:center"><img src="/Users/giselearevalo/Desktop/Screen Shot 2020-11-24 at 9.04.59 PM.png" style="zoom:50%;" />
+<img src="/Users/giselearevalo/Documents/GitHub/CMPUT355-Assignment4/RMimg1.png" alt="RMimg1" style="zoom:67%;" />
+
+
 
 For games played against the AI, the player may additionally select the game's difficulty (the depth to which the game will search the game tree for the AI's next-move) and whether they play first or second:
 
-<div style="text-align:center"><img src="/Users/giselearevalo/Desktop/Screen Shot 2020-11-24 at 9.07.57 PM.png" style="zoom:50%;" />
+<img src="/Users/giselearevalo/Documents/GitHub/CMPUT355-Assignment4/RMimg2.png" alt="RMimg2" style="zoom:67%;" />
+
+
 
 **In-Game Interface:**
 
-<div style="text-align:center"><img src="/Users/giselearevalo/Desktop/Screen Shot 2020-11-24 at 9.13.04 PM.png" style="zoom:50%;" />
+<img src="/Users/giselearevalo/Documents/GitHub/CMPUT355-Assignment4/RMimg3.png" alt="RMimg3" style="zoom:67%;" />
 
 The in-game interface allows for the user to access a help-menu with the above options. The player enters their move as two tuples, a coordinate for each of the dots they want to connect with a line.
 
