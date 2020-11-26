@@ -59,6 +59,9 @@
     generateMoves(self, c, r)
         Creates a queue of all available moves/lines that can be played on this board
 
+    generateBoxes(self, cols, rows)
+        Creates a list of Box objects for the board
+
     displayBoard(self, gametype)
         Prints a text representation of the current board state for the command line
     
