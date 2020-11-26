@@ -55,6 +55,10 @@ The in-game interface allows for the user to access a help-menu with the above o
 |  5x5  | Seconds   |      15.397095 |          45.495085 |            953.262535 |                  ------ |                     ------ |
 |       | No. Nodes |  59x58 = 3,422 | 59x58x57 = 195,054 |   59x58x57x56 = 1.1e7 |  59x58x57x56x55 = 6.0e8 | 59x58x57x56x55x54 = 3.2e10 |
 
+<p align="center">
+  <img width="460" height="300" src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/Graph1.jpg">
+</p>
+
 ## Sources
 
 The following were referenced at different points of our assignment's development:
