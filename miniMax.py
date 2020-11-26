@@ -1,19 +1,32 @@
 """
     A class used to represent the search algorithm for Dots and Boxes
 
+    Attributes
+    -------
+    self.descendants: List
+        A list containing the unique descendants of the board position
+        passed into getMove
+    
     Methods
     -------
     swapSides(self, box, swap_type=0)
-        Description
+        Code used to swap the lines on a box, used when generating a mirror of
+        a board as the boxes cannot just be moved around the board but also
+        "rotated".
 
     mirror(self, board, axis=0)
-        Description
+        Function to mirror a the boxes of a board around a specified axis.
+        Currently only coded for boards of size 3x3 (boxes)
     
     genIsos(self, o_board)
-        Description
+        Funtion to generate a lits of all board layouts isomorphic to o_board.
+        If board is not of size 3x3 (boxes), returns a list containing only the
+        original board layout
     
     pruneDescendants(self, board)
-        Description
+        Function to decrease the search space by removing child positions of the
+        current board which are already present in the search space (descendants
+        list)
     
     miniMax(self, board, depth, turn, alpha=-1000, beta=1000)
         A minimax-function for the game "Dots and Boxes". Recursive.
