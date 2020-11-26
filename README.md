@@ -62,8 +62,9 @@ The in-game interface allows for the user to access a help-menu with the above o
 
 ## Demo
 Full Demo available here: https://youtu.be/ieTv5IVZg8A
-<img src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/PvP.gif" alt="Player versus Player Demo" title="Player versus Player Demo" width="500"/>
-<img src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/AIvAI.gif" alt="AI as player 1 versus AI as player 2" title="AI versus AI" width="500"/>
+<br>
+<img src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/PvP.gif" alt="Player versus Player Demo" title="Player versus Player Demo"/><br>
+<img src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/AIvAI.gif" alt="AI as player 1 versus AI as player 2" title="AI versus AI"/>
 ## Sources
 
 The following were referenced at different points of our assignment's development:
