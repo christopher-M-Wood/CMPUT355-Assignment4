@@ -57,6 +57,8 @@ The in-game interface allows for the user to access a help-menu with the above o
 
 <p align="center">
   <img width="460" height="300" src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/Graph1.jpg">
+  <img width="460" height="300" src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/Graph2.jpg">
+  <img width="460" height="300" src="https://github.com/christopher-M-Wood/CMPUT355-Assignment4/blob/master/Graph3.jpg">
 </p>
 
 ## Sources
